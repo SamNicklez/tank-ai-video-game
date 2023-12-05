@@ -6,6 +6,8 @@ class Map:
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.TILE_SIZE = TILE_SIZE
+        self.NUM_TILES_WIDTH = WIDTH // TILE_SIZE
+        self.NUM_TILES_HEIGHT = HEIGHT // TILE_SIZE
 
         self.background = pygame.Surface((WIDTH, HEIGHT))
 
@@ -33,7 +35,7 @@ class Map:
 
     def set_tile(self, x, y, tile_type):
         main_type = tile_type.split(',')
-        if 0 <= x < self.WIDTH // self.TILE_SIZE and 0 <= y < self.HEIGHT // self.TILE_SIZE:
+        if 0 <= x < self.NUM_TILES_WIDTH and 0 <= y < self.NUM_TILES_HEIGHT:
             self.tiles[y][x] = tile_type
             if main_type[0] == 'out_of_bounds':
                 self.background.blit(self.out_of_bounds_texture, (x * self.TILE_SIZE, y * self.TILE_SIZE))
@@ -50,23 +52,42 @@ class Map:
                                          (x * self.TILE_SIZE, y * self.TILE_SIZE))
 
     def initialize_map_tiles(self):
-        for i in range(self.WIDTH // self.TILE_SIZE):
-            for j in range(self.HEIGHT // self.TILE_SIZE):
+        self.perimeter()
+        self.spawn_walls()
+
+    def perimeter(self):
+        for i in range(self.NUM_TILES_WIDTH):
+            for j in range(self.NUM_TILES_HEIGHT):
                 self.set_tile(i, j, "out_of_bounds")
 
-        for i in range(10, (self.WIDTH // self.TILE_SIZE) - 10):
-            for j in range(6, (self.HEIGHT // self.TILE_SIZE) - 6):
-                if i == 10 or i == (self.WIDTH // self.TILE_SIZE) - 11:
+        for i in range(2, self.NUM_TILES_WIDTH - 2):
+            for j in range(1, self.NUM_TILES_HEIGHT - 1):
+                if i == 2 or i == self.NUM_TILES_WIDTH - 3:
                     self.set_tile(i, j, "vert")
-                elif j == 6 or j == (self.HEIGHT // self.TILE_SIZE) - 7:
+                elif j == 1 or j == self.NUM_TILES_HEIGHT - 2:
                     self.set_tile(i, j, "hori")
                 else:
                     self.set_tile(i, j, "in_bounds")
 
-        self.set_tile(10, 6, "corner,down_right")
-        self.set_tile((self.WIDTH // self.TILE_SIZE) - 11, 6, "corner,down_left")
-        self.set_tile(10, (self.HEIGHT // self.TILE_SIZE) - 7, "corner,up_right")
-        self.set_tile((self.WIDTH // self.TILE_SIZE) - 11, (self.HEIGHT // self.TILE_SIZE) - 7, "corner,up_left")
+        self.set_tile(2, 1, "corner,down_right")
+        self.set_tile(self.NUM_TILES_WIDTH - 3, 1, "corner,down_left")
+        self.set_tile(2, self.NUM_TILES_HEIGHT - 2, "corner,up_right")
+        self.set_tile(self.NUM_TILES_WIDTH - 3, self.NUM_TILES_HEIGHT - 2, "corner,up_left")
+
+    def spawn_walls(self):
+        for i in range(5, 7):
+            self.set_tile(i, 6, "hori")
+        for j in range(4, 6):
+            self.set_tile(7, j, "vert")
+        self.set_tile(7, 6, "corner,up_left")
+
+        for i in range(self.NUM_TILES_WIDTH - 7, self.NUM_TILES_WIDTH - 5):
+            self.set_tile(i, self.NUM_TILES_HEIGHT - 7, "hori")
+        for j in range(self.NUM_TILES_HEIGHT - 6, self.NUM_TILES_HEIGHT - 4):
+            self.set_tile(self.NUM_TILES_WIDTH - 8, j, "vert")
+        self.set_tile(self.NUM_TILES_WIDTH - 8, self.NUM_TILES_HEIGHT - 7, "corner,down_right")
+
+
 
     def load_textures(self):
         grass = pygame.image.load('assets/map/grass.png')

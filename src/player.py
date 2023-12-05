@@ -4,8 +4,8 @@ from tank import Tank
 
 
 class Player(Tank):
-    def __init__(self, screen, start_pos, bullets_group, walls):
-        super(Player, self).__init__(screen, 'assets/tanks/player_tank.png', start_pos, 270, bullets_group, walls)
+    def __init__(self, screen, start_pos, start_angle, bullets_group, walls):
+        super(Player, self).__init__(screen, 'assets/tanks/player_tank.png', start_pos, start_angle, bullets_group, walls)
         self.health = 5
 
     def update(self, pressed_keys, current_time):
