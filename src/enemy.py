@@ -7,7 +7,7 @@ from tank import Tank
 
 class Enemy(Tank):
     def __init__(self, screen, start_pos, player, bullets_group, walls):
-        super(Enemy, self).__init__(screen, 'assets/enemy_tank.png', start_pos, 90, bullets_group, walls)
+        super(Enemy, self).__init__(screen, 'assets/tanks/enemy_tank.png', start_pos, 90, bullets_group, walls)
         self.player = player
         self.FORWARD_VELOCITY = 3
         self.ROTATION_SPEED = 2

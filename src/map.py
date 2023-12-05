@@ -69,11 +69,11 @@ class Map:
         self.set_tile((self.WIDTH // self.TILE_SIZE) - 11, (self.HEIGHT // self.TILE_SIZE) - 7, "corner,up_left")
 
     def load_textures(self):
-        grass = pygame.image.load('assets/jawbreaker/grass.png')
-        tile = pygame.image.load('assets/jawbreaker/tile.png')
-        wall = pygame.image.load('assets/jawbreaker/wall.png')
-        wall_t = pygame.image.load('assets/jawbreaker/wall_t.png')
-        wall_corner = pygame.image.load('assets/jawbreaker/wall_corner.png')
+        grass = pygame.image.load('assets/map/grass.png')
+        tile = pygame.image.load('assets/map/tile.png')
+        wall = pygame.image.load('assets/map/wall.png')
+        wall_t = pygame.image.load('assets/map/wall_t.png')
+        wall_corner = pygame.image.load('assets/map/wall_corner.png')
 
         wall_textures = {
             'vert': wall,
