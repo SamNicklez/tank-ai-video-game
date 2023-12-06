@@ -59,7 +59,6 @@ class Enemy(Tank):
                 self.state = "shooting"
                 self.last_action_time = current_time
 
-
     def calculate_distance_to_player(self):
         return math.hypot(self.player.rect.centerx - self.rect.centerx, self.player.rect.centery - self.rect.centery)
 

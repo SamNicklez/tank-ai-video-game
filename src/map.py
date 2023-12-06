@@ -53,7 +53,6 @@ class Map:
 
     def initialize_map_tiles(self):
         self.perimeter()
-        self.spawn_walls()
 
     def perimeter(self):
         for i in range(self.NUM_TILES_WIDTH):
@@ -73,20 +72,6 @@ class Map:
         self.set_tile(self.NUM_TILES_WIDTH - 3, 1, "corner,down_left")
         self.set_tile(2, self.NUM_TILES_HEIGHT - 2, "corner,up_right")
         self.set_tile(self.NUM_TILES_WIDTH - 3, self.NUM_TILES_HEIGHT - 2, "corner,up_left")
-
-    def spawn_walls(self):
-        for i in range(5, 7):
-            self.set_tile(i, 6, "hori")
-        for j in range(4, 6):
-            self.set_tile(7, j, "vert")
-        self.set_tile(7, 6, "corner,up_left")
-
-        for i in range(self.NUM_TILES_WIDTH - 7, self.NUM_TILES_WIDTH - 5):
-            self.set_tile(i, self.NUM_TILES_HEIGHT - 7, "hori")
-        for j in range(self.NUM_TILES_HEIGHT - 6, self.NUM_TILES_HEIGHT - 4):
-            self.set_tile(self.NUM_TILES_WIDTH - 8, j, "vert")
-        self.set_tile(self.NUM_TILES_WIDTH - 8, self.NUM_TILES_HEIGHT - 7, "corner,down_right")
-
 
 
     def load_textures(self):

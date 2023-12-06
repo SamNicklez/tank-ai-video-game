@@ -45,5 +45,5 @@ class Tank(pygame.sprite.Sprite):
 
     def shoot(self):
         bullet_start_pos = self.rect.center + self.direction * 40
-        new_bullet = Bullet(self.screen, bullet_start_pos, self.direction)
+        new_bullet = Bullet(self.screen, self.walls, bullet_start_pos, self.angle)
         self.bullets_group.add(new_bullet)
