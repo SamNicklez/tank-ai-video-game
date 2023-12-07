@@ -2,11 +2,11 @@ import pygame
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, screen, walls, start_pos, start_angle):
+    def __init__(self, game, walls, start_pos, start_angle):
         super(Bullet, self).__init__()
-        self.screen = screen
+        self.game = game
         self.walls = walls
-        self.original_image = pygame.image.load("assets/tanks/bullet.png").convert_alpha()
+        self.original_image = pygame.image.load(f"{game.sprite_dir}/bullet.png").convert_alpha()
         self.angle = start_angle
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.mask = pygame.mask.from_surface(self.image)
@@ -19,7 +19,7 @@ class Bullet(pygame.sprite.Sprite):
         new_position.move_ip(self.direction * self.speed)
 
         if not self.check_collisions(new_position):
-            if self.screen.get_rect().contains(self.rect):
+            if self.game.screen.get_rect().contains(self.rect):
                 self.rect = new_position
             else:
                 self.kill()

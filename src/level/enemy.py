@@ -2,12 +2,12 @@ import math
 
 import pygame
 
-from tank import Tank
+from level.tank import Tank
 
 
 class Enemy(Tank):
-    def __init__(self, screen, start_pos, start_angle, player, bullets_group, walls):
-        super(Enemy, self).__init__(screen, 'assets/tanks/enemy_tank.png', start_pos, start_angle, bullets_group, walls)
+    def __init__(self, game, start_pos, start_angle, player, bullets_group, walls):
+        super(Enemy, self).__init__(game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group, walls)
         self.player = player
         self.FORWARD_VELOCITY = 3
         self.ROTATION_SPEED = 2

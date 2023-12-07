@@ -1,166 +1,131 @@
-import sys
+import os
 
 import pygame
 
-from enemy import Enemy
-from map import Map
-from player import Player
-
-WIDTH = 1280
-HEIGHT = 768
-TILE_SIZE = 32
+from states.level import Level
+from states.title import Title
 
 
 class Game:
     def __init__(self):
         pygame.init()
 
-        self.screen = pygame.display.set_mode([WIDTH, HEIGHT])
+        self.WIDTH, self.HEIGHT = 1280, 768
+        self.TILE_SIZE = 32
+        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+
         self.clock = pygame.time.Clock()
-        self.current_level = None
+        self.current_time = 0
+
+        self.running, self.playing = True, True
+        self.actions = {"left": False, "right": False, "up": False, "down": False, "space": False, "enter": False,
+                        "escape": False}
+        self.state_stack = []
+
+        self.load_assets()
+        self.load_states()
+
         self.levels = {
-            1: {
-                'assets': 'assets/map/',
-                'status': 'unlocked',
-            },
-            2: {
-                'assets': 'assets/map/',
-                'status': 'locked',
-            },
-            3: {
-                'assets': 'assets/map/',
-                'status': 'locked',
-            }
+            1: Level(self, number=1, status='unlocked'),
+            2: Level(self, number=2),
+            3: Level(self, number=3),
         }
-        self.player = None
-        self.enemies = pygame.sprite.Group()
-        self.bullets = pygame.sprite.Group()
-        self.running = True
-        self.map = Map(WIDTH, HEIGHT, TILE_SIZE)
 
-        self.title_font = pygame.font.Font(None, 72)
-        self.button_font = pygame.font.Font(None, 50)
+    def game_loop(self):
+        while self.playing:
+            self.get_dt()
+            self.get_events()
+            self.update()
+            self.render()
 
-    def run(self):
-        while True:
-            self.main_menu()
-            self.level_start()
-
-    def main_menu(self):
-        menu = True
-        play_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 20, 200, 40)
-
-        while menu:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if play_button.collidepoint(event.pos):
-                        menu = False
-
-            self.screen.fill((0, 0, 0))  # Background color
-            title_text = self.title_font.render("Tank Game", True, (255, 255, 255))
-            play_text = self.button_font.render("Play", True, (255, 255, 255))
-
-            title_text_rect = title_text.get_rect(center=(WIDTH // 2, HEIGHT // 3))
-            self.screen.blit(title_text, title_text_rect)
-
-            pygame.draw.rect(self.screen, (255, 0, 0), play_button)  # Draw play button
-            play_text_rect = play_text.get_rect(center=play_button.center)
-            self.screen.blit(play_text, play_text_rect)
-
-            pygame.display.flip()
-            self.clock.tick(30)
-
-    def level_start(self):
-        self.level_init()
-
-        while self.running:
-            if len(self.enemies) < 1:
-                self.game_over(True)
-                return True
-            if self.player.health <= 0:
-                self.game_over(False)
-                return False
-
-            current_time = pygame.time.get_ticks()
-            pressed_keys = pygame.key.get_pressed()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+    def get_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.playing = False
+                self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.playing = False
                     self.running = False
-                    pygame.quit()
-                    sys.exit()
+                if event.key == pygame.K_LEFT:
+                    self.actions['left'] = True
+                if event.key == pygame.K_RIGHT:
+                    self.actions['right'] = True
+                if event.key == pygame.K_UP:
+                    self.actions['up'] = True
+                if event.key == pygame.K_DOWN:
+                    self.actions['down'] = True
+                if event.key == pygame.K_SPACE:
+                    self.actions['space'] = True
+                if event.key == pygame.K_RETURN:
+                    self.actions['enter'] = True
+                if event.key == pygame.K_ESCAPE:
+                    self.actions['escape'] = True
 
-            # Update game objects
-            self.update(pressed_keys, current_time)
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    self.actions['left'] = False
+                if event.key == pygame.K_RIGHT:
+                    self.actions['right'] = False
+                if event.key == pygame.K_UP:
+                    self.actions['up'] = False
+                if event.key == pygame.K_DOWN:
+                    self.actions['down'] = False
+                if event.key == pygame.K_SPACE:
+                    self.actions['space'] = False
+                if event.key == pygame.K_RETURN:
+                    self.actions['enter'] = False
+                if event.key == pygame.K_ESCAPE:
+                    self.actions['escape'] = False
 
-            # Draw everything
-            self.draw()
+    def update(self):
+        self.state_stack[-1].update(self.current_time, self.actions)
 
-            pygame.display.flip()
-            self.clock.tick(30)
+    def render(self):
+        self.state_stack[-1].render(self.screen)
+        # Render current state to the screen
 
-    def level_init(self):
-        self.enemies.empty()
-        self.bullets.empty()
-        self.map.wall_positions.clear()
+        pygame.display.flip()
+        self.clock.tick(30)
 
-        self.map.load_textures()
-        self.map.initialize_map_tiles()
-        self.player = Player(self.screen, (4 * TILE_SIZE, 3 * TILE_SIZE), 225, self.bullets, self.map.wall_positions)
-        self.spawn_enemy((WIDTH - 4 * TILE_SIZE, HEIGHT - 3 * TILE_SIZE), 45)
+    def get_dt(self):
+        self.current_time = pygame.time.get_ticks()
 
-    def game_over(self, win):
-        self.enemies.empty()
-        self.bullets.empty()
-        self.map.wall_positions.clear()
+    def draw_text(self, surface, text, color, x, y):
+        text_surface = self.font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
+        surface.blit(text_surface, text_rect)
 
-        game_over = True
-        main_menu_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 20, 200, 40)  # Example play button rectangle
+    def draw_button(self, surface, text, button_color, text_color, x, y, width, height):
+        button = pygame.Rect(x, y, width, height)
+        pygame.draw.rect(surface, button_color, button)
+        text_surface = self.font_button.render(text, True, text_color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = button.center
+        surface.blit(text_surface, text_rect)
+        return button
 
-        while game_over:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if main_menu_button.collidepoint(event.pos):
-                        game_over = False
+    def draw_button_color(self, surface, button, button_color):
+        pygame.draw.rect(surface, button_color, button)
 
-            self.screen.fill((0, 0, 0))  # Background color
-            if win:
-                game_over_text = self.title_font.render("You Win!", True, (255, 255, 255))
-            else:
-                game_over_text = self.title_font.render("You Lose!", True, (255, 255, 255))
-            main_menu_text = self.button_font.render("Main Menu", True, (255, 255, 255))
+    def load_assets(self):
+        # Create pointers to directories
+        self.assets_dir = os.path.join("assets")
+        self.sprite_dir = os.path.join(self.assets_dir, "sprites")
+        self.font = pygame.font.Font(None, 72)
+        self.font_button = pygame.font.Font(None, 48)
 
-            game_over_text_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 3))
-            self.screen.blit(game_over_text, game_over_text_rect)
+    def load_states(self):
+        self.title_screen = Title(self)
+        self.state_stack.append(self.title_screen)
 
-            pygame.draw.rect(self.screen, (255, 0, 0), main_menu_button)  # Draw play button
-            play_text_rect = main_menu_text.get_rect(center=main_menu_button.center)
-            self.screen.blit(main_menu_text, play_text_rect)
+    def reset_keys(self):
+        for action in self.actions:
+            self.actions[action] = False
 
-            pygame.display.flip()
-            self.clock.tick(30)
 
-    def update(self, pressed_keys, current_time):
-        # Update game objects
-        self.player.update(pressed_keys, current_time)
-        self.enemies.update(current_time)
-        self.bullets.update(self.player, self.enemies)
-
-    def draw(self):
-        # Draw everything
-        self.screen.fill((0, 0, 0))
-        self.screen.blit(self.map.background, (0, 0))
-        self.player.draw(self.screen)
-        self.enemies.draw(self.screen)
-        self.bullets.draw(self.screen)
-
-    def spawn_enemy(self, pos, start_angle):
-        enemy = Enemy(self.screen, pos, start_angle, self.player, self.bullets,
-                      self.map.wall_positions)  # Pass bullets group to enemy
-        self.enemies.add(enemy)
+if __name__ == "__main__":
+    g = Game()
+    while g.running:
+        g.game_loop()

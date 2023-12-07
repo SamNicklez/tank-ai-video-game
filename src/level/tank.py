@@ -1,12 +1,12 @@
 import pygame
 
-from bullet import Bullet
+from level.bullet import Bullet
 
 
 class Tank(pygame.sprite.Sprite):
-    def __init__(self, screen, image_path, start_pos, start_angle, bullets_group, walls):
+    def __init__(self, game, image_path, start_pos, start_angle, bullets_group, walls):
         super(Tank, self).__init__()
-        self.screen = screen
+        self.game = game
         self.walls = walls
         self.bullets_group = bullets_group
         self.original_image = pygame.image.load(image_path).convert_alpha()
@@ -40,10 +40,10 @@ class Tank(pygame.sprite.Sprite):
                 return True
         return False
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect.topleft)
+    def render(self, display):
+        display.blit(self.image, self.rect.topleft)
 
     def shoot(self):
         bullet_start_pos = self.rect.center + self.direction * 40
-        new_bullet = Bullet(self.screen, self.walls, bullet_start_pos, self.angle)
+        new_bullet = Bullet(self.game, self.walls, bullet_start_pos, self.angle)
         self.bullets_group.add(new_bullet)
