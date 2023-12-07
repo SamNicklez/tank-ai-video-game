@@ -2,7 +2,8 @@ import pygame
 
 
 class Map:
-    def __init__(self, WIDTH, HEIGHT, TILE_SIZE):
+    def __init__(self, game, WIDTH, HEIGHT, TILE_SIZE):
+        self.game = game
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.TILE_SIZE = TILE_SIZE
@@ -73,13 +74,12 @@ class Map:
         self.set_tile(2, self.NUM_TILES_HEIGHT - 2, "corner,up_right")
         self.set_tile(self.NUM_TILES_WIDTH - 3, self.NUM_TILES_HEIGHT - 2, "corner,up_left")
 
-
     def load_textures(self):
-        grass = pygame.image.load('assets/map/grass.png')
-        tile = pygame.image.load('assets/map/tile.png')
-        wall = pygame.image.load('assets/map/wall.png')
-        wall_t = pygame.image.load('assets/map/wall_t.png')
-        wall_corner = pygame.image.load('assets/map/wall_corner.png')
+        grass = pygame.image.load(f"{self.game.assets_dir}/map/grass.png")
+        tile = pygame.image.load(f"{self.game.assets_dir}/map/tile.png")
+        wall = pygame.image.load(f"{self.game.assets_dir}/map/wall.png")
+        wall_t = pygame.image.load(f"{self.game.assets_dir}/map/wall_t.png")
+        wall_corner = pygame.image.load(f"{self.game.assets_dir}/map/wall_corner.png")
 
         wall_textures = {
             'vert': wall,

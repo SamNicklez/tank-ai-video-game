@@ -1,7 +1,3 @@
-from pathlib import Path
-
-import pygame
-
 from level.tank import Tank
 
 

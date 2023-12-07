@@ -2,12 +2,9 @@ import pygame
 
 from level.enemy import Enemy
 from level.player import Player
-from map import Map
+from level.map import Map
 from states.game_over import GameOver
 from states.state import State
-
-
-# from states.pause_menu import PauseMenu
 
 
 class Level(State):
@@ -17,7 +14,7 @@ class Level(State):
         self.status = status
         self.enemies = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
-        self.map = Map(self.game.WIDTH, self.game.HEIGHT, self.game.TILE_SIZE)
+        self.map = Map(self.game, self.game.WIDTH, self.game.HEIGHT, self.game.TILE_SIZE)
         self.player = Player(self.game, (4 * self.game.TILE_SIZE, 3 * self.game.TILE_SIZE), 225, self.bullets,
                              self.map.wall_positions)
 
@@ -60,7 +57,6 @@ class Level(State):
                              self.map.wall_positions)
 
         self.spawn_enemy((self.game.WIDTH - 4 * self.game.TILE_SIZE, self.game.HEIGHT - 3 * self.game.TILE_SIZE), 45)
-
 
     def spawn_enemy(self, pos, start_angle):
         enemy = Enemy(self.game, pos, start_angle, self.player, self.bullets, self.map.wall_positions)

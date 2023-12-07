@@ -3,9 +3,6 @@ import pygame
 from states.state import State
 
 
-# from states.pause_menu import PauseMenu
-
-
 class GameOver(State):
     def __init__(self, game, win):
         State.__init__(self, game)
