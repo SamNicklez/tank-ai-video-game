@@ -16,9 +16,9 @@ class Tank(pygame.sprite.Sprite):
         self.pathfinding_hitbox = self.rect.inflate(0, 0)
         self.mask = pygame.mask.from_surface(self.image)
         self.direction = pygame.math.Vector2(0, -1).rotate(-self.angle)
-        self.FORWARD_VELOCITY = 5
-        self.BACKWARD_VELOCITY = 2
-        self.ROTATION_SPEED = 3
+        self.FORWARD_VELOCITY = 4
+        self.BACKWARD_VELOCITY = 4
+        self.ROTATION_SPEED = 4
         self.shoot_cooldown = 1000
         self.last_shot_time = 0
 

@@ -2,18 +2,19 @@ import math
 
 import pygame
 
+from level.pathfinding import line_intersects_rect, find_path
 from level.tank import Tank
-from level.node import Node
 
 
 class Enemy(Tank):
     def __init__(self, game, start_pos, start_angle, player, bullets_group, walls):
-        super(Enemy, self).__init__(game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group,
-                                    walls)
+        Tank.__init__(self, game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group,
+                      walls)
+
         self.player = player
         self.FORWARD_VELOCITY = 3
         self.ROTATION_SPEED = 3
-        self.shooting_angle = 1
+        self.shooting_angle = 2
 
         self.shoot_cooldown = 2000
         self.last_shot_time = 0
@@ -26,10 +27,10 @@ class Enemy(Tank):
 
         self.state = "idle"
         self.path = []
+        self.path_index = 0
 
         self.next_pos = None
         self.next_waypoint_rect = None
-
 
     def update(self, current_time):
         if current_time - self.last_action_time >= self.action_cooldown:
@@ -60,7 +61,7 @@ class Enemy(Tank):
 
     def pathfind_to_player(self, current_time):
         if current_time - self.last_pathfinding_time >= self.pathfinding_cooldown or self.last_pathfinding_time == 0:
-            self.path = self.find_path(self.rect.center, self.player.rect.center)
+            self.path = find_path(self.rect.center, self.player.rect.center, self.walls)
             self.last_pathfinding_time = current_time
         self.path_index = 1
         self.state = "pathing"
@@ -79,7 +80,7 @@ class Enemy(Tank):
             )
 
             # Check if the enemy's hitbox collides with the rect of the next waypoint
-            if self.pathfinding_hitbox.colliderect(waypoint_rect):
+            if self.rect.center == waypoint_rect.center:
                 # Move to the next waypoint
                 self.path_index += 1
 
@@ -102,18 +103,25 @@ class Enemy(Tank):
             direction_vector.normalize_ip()
 
         # Rotate towards the target waypoint
+
         target_angle = direction_vector.angle_to(pygame.math.Vector2(0, -1))
+        target_angle = round(target_angle)
+        print("target angle:", target_angle)
         angle_difference = (target_angle - self.angle + 360) % 360
+        print("angle difference:", angle_difference)
         if angle_difference > 180:
             angle_difference -= 360
 
         # If angle difference is significant, rotate first
         if abs(angle_difference) > self.ROTATION_SPEED:
             self.rotate(math.copysign(self.ROTATION_SPEED, angle_difference))
+        elif abs(angle_difference) > 0:
+            self.rotate(angle_difference)
         else:
-            # If enemy is already facing the waypoint, move towards it
-            self.rect.x += direction_vector.x * self.FORWARD_VELOCITY
-            self.rect.y += direction_vector.y * self.FORWARD_VELOCITY
+            if distance_to_waypoint > self.FORWARD_VELOCITY:
+                self.move(direction_vector, self.walls)
+            elif distance_to_waypoint > 0:
+                self.rect.move_ip(self.direction * distance_to_waypoint)
 
             self.pathfinding_hitbox.center = self.rect.center
 
@@ -166,103 +174,9 @@ class Enemy(Tank):
         end = pygame.math.Vector2(self.player.rect.center)
 
         for wall in self.walls:
-            if self.line_intersects_rect(start, end, wall):
+            if line_intersects_rect(start, end, wall):
                 return False
         return True
-
-    def find_path(self, start, end):
-        start_node = Node(start[0] // self.game.TILE_SIZE, start[1] // self.game.TILE_SIZE)
-        end_node = Node(end[0] // self.game.TILE_SIZE, end[1] // self.game.TILE_SIZE)
-
-        open_list = []
-        closed_list = []
-        open_list.append(start_node)
-
-        while open_list:
-            current_node = min(open_list, key=lambda node: node.f)
-            open_list.remove(current_node)
-            closed_list.append(current_node)
-
-            if current_node == end_node:
-                path = []
-                while current_node:
-                    tile_center_x = (current_node.x * self.game.TILE_SIZE) + (self.game.TILE_SIZE // 2)
-                    tile_center_y = (current_node.y * self.game.TILE_SIZE) + (self.game.TILE_SIZE // 2)
-                    path.append((tile_center_x, tile_center_y))
-                    current_node = current_node.parent
-                return path[::-1]
-
-            for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
-                node_position = (current_node.x + new_position[0], current_node.y + new_position[1])
-
-                if not self.is_walkable(node_position):
-                    continue
-
-                new_node = Node(node_position[0], node_position[1], current_node)
-
-                if new_node in closed_list:
-                    continue
-
-                new_node.g = current_node.g + 1
-                new_node.h = abs(new_node.x - end_node.x) + abs(new_node.y - end_node.y)
-                new_node.f = new_node.g + new_node.h
-
-                if new_node not in open_list:
-                    open_list.append(new_node)
-
-        return []
-
-    def is_walkable(self, node_position):
-        # Check if the node is within map bounds
-        if (node_position[0] < 0 or node_position[1] < 0 or
-                node_position[0] >= self.game.NUM_TILES_WIDTH or
-                node_position[1] >= self.game.NUM_TILES_HEIGHT):
-            return False
-
-        # Create a rect for the node
-        node_rect = pygame.Rect(node_position[0] * self.game.TILE_SIZE, node_position[1] * self.game.TILE_SIZE,
-                                self.game.TILE_SIZE, self.game.TILE_SIZE)
-
-        # Check if the node rect intersects with any wall rect
-        for wall in self.walls:
-            if node_rect.colliderect(wall):
-                return False
-
-        return True
-
-    def line_intersects_rect(self, p0, p1, rect):
-        # Check if either end of the line is inside the rectangle
-        if rect.collidepoint(p0) or rect.collidepoint(p1):
-            return True
-
-        # Points of the rectangle
-        rect_points = [
-            rect.topleft, rect.topright, rect.bottomright, rect.bottomleft
-        ]
-
-        # Check each edge of the rectangle
-        for i in range(4):
-            if self.line_intersects_line(p0, p1, rect_points[i], rect_points[(i + 1) % 4]):
-                return True
-
-        return False
-
-    def line_intersects_line(self, p0, p1, p2, p3):
-        # Calculate parts of the line intersection formula
-        s1_x = p1[0] - p0[0]
-        s1_y = p1[1] - p0[1]
-        s2_x = p3[0] - p2[0]
-        s2_y = p3[1] - p2[1]
-
-        denom = (-s2_x * s1_y + s1_x * s2_y)
-        if denom == 0:  # Lines are parallel
-            return False
-
-        s = (-s1_y * (p0[0] - p2[0]) + s1_x * (p0[1] - p2[1])) / denom
-        t = (s2_x * (p0[1] - p2[1]) - s2_y * (p0[0] - p2[0])) / denom
-
-        # If s and t are between 0 and 1, lines intersect
-        return 0 <= s <= 1 and 0 <= t <= 1
 
     def draw_path(self, surface):
         if self.path and len(self.path) > 1:
@@ -273,13 +187,12 @@ class Enemy(Tank):
             # Draw lines between each point in the path
             pygame.draw.lines(surface, path_color, False, self.path, path_width)
 
-
     def draw_line_of_sight(self, surface):
         start = pygame.math.Vector2(self.rect.center)
         end = pygame.math.Vector2(self.player.rect.center)
 
         for wall in self.walls:
-            if self.line_intersects_rect(start, end, wall):
+            if line_intersects_rect(start, end, wall):
                 return
 
         pygame.draw.lines(surface, (255, 0, 0), False, [start, end], 4)
