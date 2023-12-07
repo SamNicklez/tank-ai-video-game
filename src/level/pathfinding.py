@@ -21,18 +21,13 @@ class Node:
 
 
 def line_intersects_rect(p0, p1, rect):
-    # Check if either end of the line is inside the rectangle
-    if rect.collidepoint(p0) or rect.collidepoint(p1):
-        return True
-
     # Points of the rectangle
-    rect_points = [
-        rect.topleft, rect.topright, rect.bottomright, rect.bottomleft
-    ]
+    rect_points = [rect.topleft, rect.topright, rect.bottomright, rect.bottomleft]
 
     # Check each edge of the rectangle
-    for i in range(4):
-        if line_intersects_line(p0, p1, rect_points[i], rect_points[(i + 1) % 4]):
+    for i in range(len(rect_points)):
+        p2, p3 = rect_points[i], rect_points[(i + 1) % 4]
+        if line_intersects_line(p0, p1, p2, p3):
             return True
 
     return False
@@ -97,6 +92,61 @@ def find_path(start, end, walls):
                 open_list.append(new_node)
 
     return []
+
+
+def simplify_zigzags(path, walls):
+    simplified_path = [path[0]]
+    i = 1
+
+    while i < len(path) - 1:
+        current = simplified_path[-1]
+        next = path[i]
+        after_next = path[i + 1]
+
+        # Check if there is a zigzag pattern
+        if is_zigzag(current, next, after_next):
+            # Check if we can go directly to after_next without hitting walls
+            if not line_intersects_any_wall(current, after_next, walls):
+                # If so, skip the next point
+                simplified_path.append(after_next)
+                i += 2  # Skip the next point and the after_next point
+            else:
+                # If not, just follow the path normally
+                simplified_path.append(next)
+                i += 1
+        else:
+            # No zigzag, follow the path
+            simplified_path.append(next)
+            i += 1
+
+    # Add the last point if it wasn't added
+    if simplified_path[-1] != path[-1]:
+        simplified_path.append(path[-1])
+
+    return simplified_path
+
+
+def is_zigzag(p1, p2, p3):
+    # A zigzag is when the direction to p2 and then to p3 is perpendicular
+    direction1 = (p2[0] - p1[0], p2[1] - p1[1])
+    direction2 = (p3[0] - p2[0], p3[1] - p2[1])
+    return direction1[0] * direction2[0] + direction1[1] * direction2[1] == 0
+
+
+# Use the same line_intersects_any_wall function from before
+def line_intersects_any_wall(p0, p1, walls):
+    for wall in walls:
+        if line_intersects_rect(p0, p1, wall):
+            return True
+    return False
+
+
+def line_of_sight(p0, p1, walls):
+    line = pygame.draw.line(pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA), (0, 0, 0), p0, p1)
+    for wall in walls:
+        if line.colliderect(wall):
+            return False
+    return True
 
 
 def is_walkable(node_position, walls):

@@ -31,8 +31,8 @@ class Game:
 
         self.levels = {
             1: Level(self, number=1, status='unlocked'),
-            2: Level(self, number=2),
-            3: Level(self, number=3),
+            2: Level(self, number=2, status='unlocked'),
+            3: Level(self, number=3, status='unlocked'),
         }
 
     def game_loop(self):

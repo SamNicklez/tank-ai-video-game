@@ -2,7 +2,7 @@ import math
 
 import pygame
 
-from level.pathfinding import line_intersects_rect, find_path
+from level.pathfinding import line_intersects_rect, find_path, simplify_zigzags
 from level.tank import Tank
 
 
@@ -12,7 +12,7 @@ class Enemy(Tank):
                       walls)
 
         self.player = player
-        self.FORWARD_VELOCITY = 3
+        self.FORWARD_VELOCITY = 5
         self.ROTATION_SPEED = 3
         self.shooting_angle = 2
 
@@ -36,7 +36,7 @@ class Enemy(Tank):
         if current_time - self.last_action_time >= self.action_cooldown:
             self.determine_action(current_time)
             self.last_action_time = current_time
-
+        # Existing movement logic
         if self.state == "rotating":
             self.rotate_towards_player()
         elif self.state == "pathing":
@@ -61,10 +61,13 @@ class Enemy(Tank):
 
     def pathfind_to_player(self, current_time):
         if current_time - self.last_pathfinding_time >= self.pathfinding_cooldown or self.last_pathfinding_time == 0:
-            self.path = find_path(self.rect.center, self.player.rect.center, self.walls)
+            raw_path = find_path(self.rect.center, self.player.rect.center, self.walls)
+            self.path = simplify_zigzags(raw_path, self.walls)
             self.last_pathfinding_time = current_time
         self.path_index = 1
         self.state = "pathing"
+
+
 
     def move_along_path(self):
         if self.path_index < len(self.path):
@@ -106,9 +109,7 @@ class Enemy(Tank):
 
         target_angle = direction_vector.angle_to(pygame.math.Vector2(0, -1))
         target_angle = round(target_angle)
-        print("target angle:", target_angle)
         angle_difference = (target_angle - self.angle + 360) % 360
-        print("angle difference:", angle_difference)
         if angle_difference > 180:
             angle_difference -= 360
 
@@ -124,6 +125,15 @@ class Enemy(Tank):
                 self.rect.move_ip(self.direction * distance_to_waypoint)
 
             self.pathfinding_hitbox.center = self.rect.center
+            self.wall_hitbox.center = self.rect.center
+
+    def move(self, direction, walls):
+        new_position = self.wall_hitbox.copy()
+        new_position.move_ip(direction * self.FORWARD_VELOCITY)
+        if not self.check_collisions(new_position, walls):
+            self.rect.center = new_position.center
+            self.pathfinding_hitbox.center = self.rect.center
+            self.wall_hitbox.center = self.rect.center
 
     def calculate_angle_difference_to_player(self):
         dx = self.player.rect.centerx - self.rect.centerx

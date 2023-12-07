@@ -2,8 +2,9 @@ import pygame
 
 
 class Map:
-    def __init__(self, game):
+    def __init__(self, game, number):
         self.game = game
+        self.number = number
 
         self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT))
 
@@ -49,7 +50,12 @@ class Map:
 
     def initialize_map_tiles(self):
         self.perimeter()
-        self.spawn_walls()
+        if self.number == 1:
+            self.map_wall_1()
+        elif self.number == 2:
+            self.map_wall_2()
+        elif self.number == 3:
+            self.map_wall_3()
 
     def perimeter(self):
         for i in range(self.game.NUM_TILES_WIDTH):
@@ -70,7 +76,7 @@ class Map:
         self.set_tile(2, self.game.NUM_TILES_HEIGHT - 2, "corner,up_right")
         self.set_tile(self.game.NUM_TILES_WIDTH - 3, self.game.NUM_TILES_HEIGHT - 2, "corner,up_left")
 
-    def spawn_walls(self):
+    def map_wall_1(self):
         for i in range(6, 8):
             self.set_tile(i, 7, "hori")
         for j in range(5, 7):
@@ -82,6 +88,61 @@ class Map:
         for j in range(self.game.NUM_TILES_HEIGHT - 7, self.game.NUM_TILES_HEIGHT - 5):
             self.set_tile(self.game.NUM_TILES_WIDTH - 9, j, "vert")
         self.set_tile(self.game.NUM_TILES_WIDTH - 9, self.game.NUM_TILES_HEIGHT - 8, "corner,down_right")
+
+    def map_wall_2(self):
+        for i in range(6, 8):
+            self.set_tile(i, 7, "hori")
+        for j in range(5, 7):
+            self.set_tile(8, j, "vert")
+        self.set_tile(8, 7, "corner,up_left")
+
+        for i in range(self.game.NUM_TILES_WIDTH - 8, self.game.NUM_TILES_WIDTH - 6):
+            self.set_tile(i, self.game.NUM_TILES_HEIGHT - 8, "hori")
+        for j in range(self.game.NUM_TILES_HEIGHT - 7, self.game.NUM_TILES_HEIGHT - 5):
+            self.set_tile(self.game.NUM_TILES_WIDTH - 9, j, "vert")
+        self.set_tile(self.game.NUM_TILES_WIDTH - 9, self.game.NUM_TILES_HEIGHT - 8, "corner,down_right")
+
+        for i in range(6, 8):
+            self.set_tile(i, self.game.NUM_TILES_HEIGHT - 8, "hori")
+        for j in range(self.game.NUM_TILES_HEIGHT - 7, self.game.NUM_TILES_HEIGHT - 5):
+            self.set_tile(8, j, "vert")
+        self.set_tile(8, self.game.NUM_TILES_HEIGHT - 8, "corner,down_left")
+
+        for i in range(self.game.NUM_TILES_WIDTH - 8, self.game.NUM_TILES_WIDTH - 6):
+            self.set_tile(i, 7, "hori")
+        for j in range(5, 7):
+            self.set_tile(self.game.NUM_TILES_WIDTH - 9, j, "vert")
+        self.set_tile(self.game.NUM_TILES_WIDTH - 9, 7, "corner,up_right")
+
+    def map_wall_3(self):
+        for j in range(2, 20):
+            self.set_tile(7, j, "vert")
+
+        for j in range(4, 22):
+            self.set_tile(10, j, "vert")
+
+        for j in range(2, 20):
+            self.set_tile(13, j, "vert")
+
+        for j in range(4, 22):
+            self.set_tile(16, j, "vert")
+
+        for j in range(2, 20):
+            self.set_tile(19, j, "vert")
+
+        for j in range(4, 22):
+            self.set_tile(22, j, "vert")
+
+        for j in range(2, 20):
+            self.set_tile(25, j, "vert")
+
+        for j in range(4, 22):
+            self.set_tile(28, j, "vert")
+
+        for j in range(2, 20):
+            self.set_tile(31, j, "vert")
+
+
 
     def load_textures(self):
         grass = pygame.image.load(f"{self.game.assets_dir}/map/grass.png")
