@@ -4,6 +4,7 @@ from level.enemy import Enemy
 from level.player import Player
 from level.map import Map
 from states.game_over import GameOver
+from states.pause_menu import PauseMenu
 from states.state import State
 
 
@@ -14,8 +15,8 @@ class Level(State):
         self.status = status
         self.enemies = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
-        self.map = Map(self.game, self.game.WIDTH, self.game.HEIGHT, self.game.TILE_SIZE)
-        self.player = Player(self.game, (4 * self.game.TILE_SIZE, 3 * self.game.TILE_SIZE), 225, self.bullets,
+        self.map = Map(self.game)
+        self.player = Player(self.game, (5 * self.game.TILE_SIZE, 4 * self.game.TILE_SIZE), 225, self.bullets,
                              self.map.wall_positions)
 
         self.level_init()
@@ -33,7 +34,8 @@ class Level(State):
             next_state.enter_state()
 
         if actions["escape"]:
-            pass
+            next_state = PauseMenu(self.game, self)
+            next_state.enter_state()
 
         self.player.update(delta_time, actions)
         self.enemies.update(delta_time)
@@ -44,6 +46,13 @@ class Level(State):
         self.player.render(display)
         self.enemies.draw(display)
         self.bullets.draw(display)
+        # for enemy in self.enemies:
+        #     enemy.draw_path(display)
+        #     pygame.draw.rect(display, (0, 0, 255), enemy.pathfinding_hitbox, 2)  # Draw the enemy rect
+        #     enemy.draw_line_of_sight(display)
+        #     enemy.draw_hitbox(display)
+        #     if enemy.next_waypoint_rect:
+        #         pygame.draw.rect(display, (0, 255, 0), enemy.next_waypoint_rect, 2)
 
     def level_init(self):
         self.enemies.empty()
@@ -53,10 +62,10 @@ class Level(State):
         self.map.load_textures()
         self.map.initialize_map_tiles()
 
-        self.player = Player(self.game, (4 * self.game.TILE_SIZE, 3 * self.game.TILE_SIZE), 225, self.bullets,
+        self.player = Player(self.game, (5 * self.game.TILE_SIZE, 4 * self.game.TILE_SIZE), 225, self.bullets,
                              self.map.wall_positions)
 
-        self.spawn_enemy((self.game.WIDTH - 4 * self.game.TILE_SIZE, self.game.HEIGHT - 3 * self.game.TILE_SIZE), 45)
+        self.spawn_enemy((self.game.WIDTH - 10 * self.game.TILE_SIZE, self.game.HEIGHT - 9 * self.game.TILE_SIZE), 45)
 
     def spawn_enemy(self, pos, start_angle):
         enemy = Enemy(self.game, pos, start_angle, self.player, self.bullets, self.map.wall_positions)

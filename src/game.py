@@ -10,8 +10,12 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.WIDTH, self.HEIGHT = 1280, 768
+        self.WIDTH = 1280
+        self.HEIGHT = 768
         self.TILE_SIZE = 32
+        self.NUM_TILES_WIDTH = self.WIDTH // self.TILE_SIZE
+        self.NUM_TILES_HEIGHT = self.HEIGHT // self.TILE_SIZE
+
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 
         self.clock = pygame.time.Clock()
@@ -44,9 +48,6 @@ class Game:
                 self.playing = False
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.playing = False
-                    self.running = False
                 if event.key == pygame.K_LEFT:
                     self.actions['left'] = True
                 if event.key == pygame.K_RIGHT:

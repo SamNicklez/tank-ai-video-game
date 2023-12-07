@@ -13,6 +13,7 @@ class Tank(pygame.sprite.Sprite):
         self.angle = start_angle
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect(center=start_pos)
+        self.pathfinding_hitbox = self.rect.inflate(0, 0)
         self.mask = pygame.mask.from_surface(self.image)
         self.direction = pygame.math.Vector2(0, -1).rotate(-self.angle)
         self.FORWARD_VELOCITY = 5
@@ -25,6 +26,7 @@ class Tank(pygame.sprite.Sprite):
         self.angle += angle
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
+        self.pathfinding_hitbox.center = self.rect.center
         self.mask = pygame.mask.from_surface(self.image)
         self.direction = pygame.math.Vector2(0, -1).rotate(-self.angle)
 
@@ -33,6 +35,7 @@ class Tank(pygame.sprite.Sprite):
         new_position.move_ip(direction * self.FORWARD_VELOCITY)
         if not self.check_collisions(new_position, walls):
             self.rect = new_position
+            self.pathfinding_hitbox.center = self.rect.center
 
     def check_collisions(self, new_rect, walls):
         for wall in walls:
