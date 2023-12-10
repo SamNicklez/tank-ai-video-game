@@ -1,88 +1,132 @@
-from time import sleep
+import os
 
 import pygame
 
-from enemy import Enemy
-from map import Map
-from player import Player
-
-WIDTH = 1280
-HEIGHT = 768
-TILE_SIZE = 32
+from states.level import Level
+from states.title import Title
 
 
 class Game:
     def __init__(self):
         pygame.init()
 
-        self.screen = pygame.display.set_mode([WIDTH, HEIGHT])
+        self.WIDTH = 1280
+        self.HEIGHT = 768
+        self.TILE_SIZE = 32
+        self.NUM_TILES_WIDTH = self.WIDTH // self.TILE_SIZE
+        self.NUM_TILES_HEIGHT = self.HEIGHT // self.TILE_SIZE
+
+        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+
         self.clock = pygame.time.Clock()
-        self.player = None
-        self.enemies = pygame.sprite.Group()
-        self.bullets = pygame.sprite.Group()
-        self.running = True
-        self.map = Map(WIDTH, HEIGHT, TILE_SIZE)
+        self.current_time = 0
 
-    def run(self):
-        self.map.load_textures()
-        self.map.initialize_map_tiles()
-        self.player = Player(self.screen, (4*TILE_SIZE, 3*TILE_SIZE), 225, self.bullets, self.map.wall_positions)
-        self.spawn_enemy((WIDTH - 4*TILE_SIZE, HEIGHT - 3*TILE_SIZE), 45)
+        self.running, self.playing = True, True
+        self.actions = {"left": False, "right": False, "up": False, "down": False, "space": False, "enter": False,
+                        "escape": False}
+        self.state_stack = []
 
-        self.update(pygame.key.get_pressed(), pygame.time.get_ticks())
-        self.draw()
+        self.load_assets()
+        self.load_states()
+
+        self.levels = {
+            1: Level(self, number=1, status='unlocked'),
+            2: Level(self, number=2, status='unlocked'),
+            3: Level(self, number=3, status='unlocked'),
+        }
+
+    def game_loop(self):
+        while self.playing:
+            self.get_dt()
+            self.get_events()
+            self.update()
+            self.render()
+
+    def get_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.playing = False
+                self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    self.actions['left'] = True
+                if event.key == pygame.K_RIGHT:
+                    self.actions['right'] = True
+                if event.key == pygame.K_UP:
+                    self.actions['up'] = True
+                if event.key == pygame.K_DOWN:
+                    self.actions['down'] = True
+                if event.key == pygame.K_SPACE:
+                    self.actions['space'] = True
+                if event.key == pygame.K_RETURN:
+                    self.actions['enter'] = True
+                if event.key == pygame.K_ESCAPE:
+                    self.actions['escape'] = True
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    self.actions['left'] = False
+                if event.key == pygame.K_RIGHT:
+                    self.actions['right'] = False
+                if event.key == pygame.K_UP:
+                    self.actions['up'] = False
+                if event.key == pygame.K_DOWN:
+                    self.actions['down'] = False
+                if event.key == pygame.K_SPACE:
+                    self.actions['space'] = False
+                if event.key == pygame.K_RETURN:
+                    self.actions['enter'] = False
+                if event.key == pygame.K_ESCAPE:
+                    self.actions['escape'] = False
+
+    def update(self):
+        self.state_stack[-1].update(self.current_time, self.actions)
+
+    def render(self):
+        self.state_stack[-1].render(self.screen)
+        # Render current state to the screen
+
         pygame.display.flip()
         self.clock.tick(30)
-        sleep(2)
 
-        while self.running:
-            if len(self.enemies) < 1:
-                self.spawn_enemy((1150, HEIGHT // 2), 45)
-            if self.player.health <= 0:
-                self.running = False
+    def get_dt(self):
+        self.current_time = pygame.time.get_ticks()
 
-            current_time = pygame.time.get_ticks()
-            pressed_keys = pygame.key.get_pressed()
+    def draw_text(self, surface, text, color, x, y):
+        text_surface = self.font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
+        surface.blit(text_surface, text_rect)
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
+    def draw_button(self, surface, text, button_color, text_color, x, y, width, height):
+        button = pygame.Rect(x, y, width, height)
+        pygame.draw.rect(surface, button_color, button)
+        text_surface = self.font_button.render(text, True, text_color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = button.center
+        surface.blit(text_surface, text_rect)
+        return button
 
-            # Update game objects
-            self.update(pressed_keys, current_time)
+    def draw_button_color(self, surface, button, button_color):
+        pygame.draw.rect(surface, button_color, button)
 
-            # Draw everything
-            self.draw()
+    def load_assets(self):
+        # Create pointers to directories
+        self.assets_dir = os.path.join("assets")
+        self.sprite_dir = os.path.join(self.assets_dir, "sprites")
+        self.font = pygame.font.Font(None, 72)
+        self.font_button = pygame.font.Font(None, 48)
 
-            pygame.display.flip()
-            self.clock.tick(30)
+    def load_states(self):
+        self.title_screen = Title(self)
+        self.state_stack.append(self.title_screen)
 
-        pygame.quit()
+    def reset_keys(self):
+        for action in self.actions:
+            self.actions[action] = False
 
-    def update(self, pressed_keys, current_time):
-        # Update game objects
-        self.player.update(pressed_keys, current_time)
-        self.enemies.update(current_time)
-        self.bullets.update()
-        self.check_bullet_collisions()
 
-    def draw(self):
-        # Draw everything
-        self.screen.fill((0, 0, 0))
-        self.screen.blit(self.map.background, (0, 0))
-        self.player.draw(self.screen)
-        self.enemies.draw(self.screen)
-        self.bullets.draw(self.screen)
-
-    def spawn_enemy(self, pos, start_angle):
-        enemy = Enemy(self.screen, pos, start_angle, self.player, self.bullets, self.map.wall_positions)  # Pass bullets group to enemy
-        self.enemies.add(enemy)
-
-    def check_bullet_collisions(self):
-        for bullet in self.bullets:
-            hit_enemies = pygame.sprite.spritecollide(bullet, self.enemies, True, pygame.sprite.collide_mask)
-            hit_player = pygame.sprite.spritecollide(bullet, [self.player], False, pygame.sprite.collide_mask)
-            if hit_enemies or hit_player:
-                bullet.kill()
-            if hit_player:
-                self.player.health -= 1
+if __name__ == "__main__":
+    g = Game()
+    while g.running:
+        g.game_loop()
