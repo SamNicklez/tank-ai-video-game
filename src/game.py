@@ -14,7 +14,11 @@ from level.audio import *
 
 class Game:
     def __init__(self):
+        pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=512)
+    
+        # Initialize Pygame and the mixer
         pygame.init()
+        pygame.mixer.init()
 
         self.WIDTH = 1280
         self.HEIGHT = 768
@@ -146,7 +150,15 @@ class Game:
             return np.array(resized_image)
 
         # Load the video
-        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'intro_video.mp4'))
+        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'videos/intro_video.mp4')).without_audio()
+
+
+        audio_path = os.path.join(self.assets_dir, "audio/intro_video_audio.mp3")
+
+        # Initialize Pygame mixer and play the audio
+        pygame.mixer.init()
+        pygame.mixer.music.load(audio_path)
+        pygame.mixer.music.play()
 
         # Resize each frame
         resized_clip = intro_clip.fl_image(resize_frame)
@@ -156,6 +168,7 @@ class Game:
 
         # Close the clip after playing
         resized_clip.close()
+        pygame.mixer.music.stop()
 
 
 if __name__ == "__main__":
