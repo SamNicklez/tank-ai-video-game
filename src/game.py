@@ -1,6 +1,10 @@
 import os
+from PIL import Image
+import numpy as np
 
 import pygame
+
+from moviepy.editor import VideoFileClip
 
 from states.level import Level
 from states.title import Title
@@ -125,8 +129,28 @@ class Game:
         for action in self.actions:
             self.actions[action] = False
 
+    def intro(self):
+        # Function to resize each frame of the video
+        def resize_frame(frame):
+            pil_image = Image.fromarray(frame)
+            resized_image = pil_image.resize((self.WIDTH, self.HEIGHT), Image.Resampling.LANCZOS)
+            return np.array(resized_image)
+
+        # Load the video
+        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'intro_video.mp4'))
+
+        # Resize each frame
+        resized_clip = intro_clip.fl_image(resize_frame)
+
+        # Play the resized video
+        resized_clip.preview()
+
+        # Close the clip after playing
+        resized_clip.close()
 
 if __name__ == "__main__":
+    
     g = Game()
+    Game.intro(g)
     while g.running:
         g.game_loop()
