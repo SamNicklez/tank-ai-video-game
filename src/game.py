@@ -141,11 +141,10 @@ class Game:
             return np.array(resized_image)
 
         # Load the video
-        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'intro_video.mp4')).without_audio()
+        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'videos/intro_video.mp4')).without_audio()
 
 
         audio_path = os.path.join(self.assets_dir, "audio/intro_video_audio.mp3")
-        #intro_clip.audio.write_audiofile(audio_path)
 
         # Initialize Pygame mixer and play the audio
         pygame.mixer.init()
