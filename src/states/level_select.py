@@ -70,20 +70,20 @@ class LevelSelect(State):
             if self.game.levels[level].status == 'locked':
                 self.game.draw_button(display, f"Level {level}", (128, 128, 128), (255, 255, 255),
                                       self.game.WIDTH // 2 - 125,
-                                      self.game.HEIGHT // 2 - 50 + (100 * (level - 1)), 250, 75)
+                                      self.game.HEIGHT // 2 - 150 + (100 * (level - 1)), 250, 75)
             elif level == self.index:
                 self.game.draw_button(display, f"Level {level}", (0, 255, 0), (255, 255, 255),
                                       self.game.WIDTH // 2 - 125,
-                                      self.game.HEIGHT // 2 - 50 + (100 * (level - 1)), 250, 75)
+                                      self.game.HEIGHT // 2 - 150 + (100 * (level - 1)), 250, 75)
             else:
                 self.game.draw_button(display, f"Level {level}", (255, 0, 0), (255, 255, 255),
                                       self.game.WIDTH // 2 - 125,
-                                      self.game.HEIGHT // 2 - 50 + (100 * (level - 1)), 250, 75)
+                                      self.game.HEIGHT // 2 - 150 + (100 * (level - 1)), 250, 75)
         if self.index == 4:
             self.game.draw_button(display, "Back", (0, 255, 0), (255, 255, 255),
                                   self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100 + (100 * 3), 250, 75)
+                                  self.game.HEIGHT // 2 - 150 + (100 * 3), 250, 75)
         else:
             self.game.draw_button(display, "Back", (255, 0, 0), (255, 255, 255),
                                   self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100 + (100 * 3), 250, 75)
+                                  self.game.HEIGHT // 2 - 150 + (100 * 3), 250, 75)

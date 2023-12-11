@@ -1,13 +1,10 @@
-import pygame
-
+from level.audio import *
 from level.enemy import Enemy
-from level.player import Player
 from level.map import Map
+from level.player import Player
 from states.game_over import GameOver
 from states.pause_menu import PauseMenu
 from states.state import State
-
-from level.audio import *
 
 
 class Level(State):
@@ -47,7 +44,7 @@ class Level(State):
     def render(self, display):
         display.blit(self.map.background_image, (0, 0))
         display.blit(self.map.background, (0, 0))
-        #display.blit(self.map.background_image, (0, 0))
+        # display.blit(self.map.background_image, (0, 0))
         self.player.render(display)
         self.enemies.draw(display)
         self.bullets.draw(display)
@@ -70,28 +67,47 @@ class Level(State):
         self.map.initialize_map_tiles()
 
         if self.number == 1:
-            self.player = Player(self.game, (5 * self.game.TILE_SIZE, 4 * self.game.TILE_SIZE), 225, self.bullets,
-                                 self.map.wall_positions)
+            self.player = Player(
+                self.game,
+                (4 * self.game.TILE_SIZE, 11 * self.game.TILE_SIZE),
+                270,
+                self.bullets,
+                self.map.wall_positions
+            )
 
-            self.spawn_enemy((self.game.WIDTH - 5 * self.game.TILE_SIZE, self.game.HEIGHT - 4 * self.game.TILE_SIZE),
-                             45)
+            self.spawn_enemy((
+                35 * self.game.TILE_SIZE,
+                12 * self.game.TILE_SIZE
+            ),
+                90
+            )
         elif self.number == 2:
-            self.player = Player(self.game, (5 * self.game.TILE_SIZE, 4 * self.game.TILE_SIZE), 225, self.bullets,
-                                 self.map.wall_positions)
+            self.player = Player(
+                self.game,
+                (20 * self.game.TILE_SIZE, 20 * self.game.TILE_SIZE),
+                0,
+                self.bullets,
+                self.map.wall_positions
+            )
 
-            self.spawn_enemy((self.game.WIDTH - 5 * self.game.TILE_SIZE, self.game.HEIGHT - 4 * self.game.TILE_SIZE),
-                             45)
-            self.spawn_enemy((self.game.WIDTH - 5 * self.game.TILE_SIZE, 4 * self.game.TILE_SIZE), 135)
+            self.spawn_enemy((
+                4 * self.game.TILE_SIZE,
+                3 * self.game.TILE_SIZE
+            ),
+                180
+            )
+            self.spawn_enemy((
+                35 * self.game.TILE_SIZE,
+                3 * self.game.TILE_SIZE
+            ),
+                180
+            )
         elif self.number == 3:
             self.player = Player(self.game, (5 * self.game.TILE_SIZE, 4 * self.game.TILE_SIZE), 225, self.bullets,
                                  self.map.wall_positions)
 
             self.spawn_enemy((self.game.WIDTH - 5 * self.game.TILE_SIZE, self.game.HEIGHT - 4 * self.game.TILE_SIZE),
                              45)
-        
-        
-
-
 
     def spawn_enemy(self, pos, start_angle):
         enemy = Enemy(self.game, pos, start_angle, self.player, self.bullets, self.map.wall_positions)
