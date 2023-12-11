@@ -11,7 +11,8 @@ class Map:
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 
-        self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT))
+        #self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT))
+        self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT), pygame.SRCALPHA)
 
         self.tiles = [[None for _ in range(self.game.WIDTH // self.game.TILE_SIZE)] for _ in range(self.game.HEIGHT // self.game.TILE_SIZE)]
         self.wall_positions = []
@@ -36,7 +37,7 @@ class Map:
         }
 
     def set_tile(self, x, y, tile_type):
-        
+
         main_type = tile_type.split(',')
         if 0 <= x < self.game.NUM_TILES_WIDTH and 0 <= y < self.game.NUM_TILES_HEIGHT:
             self.tiles[y][x] = tile_type
@@ -67,7 +68,9 @@ class Map:
     def perimeter(self):
         for i in range(self.game.NUM_TILES_WIDTH):
             for j in range(self.game.NUM_TILES_HEIGHT):
-                self.set_tile(i, j, "out_of_bounds")
+                if (i < 2) or (i > (self.game.NUM_TILES_WIDTH - 3)) or (j < 1) or (j > (self.game.NUM_TILES_HEIGHT - 2)):
+                    self.set_tile(i, j, "out_of_bounds")
+                pass
 
         for i in range(2, self.game.NUM_TILES_WIDTH - 2):
             for j in range(1, self.game.NUM_TILES_HEIGHT - 1):
@@ -76,8 +79,7 @@ class Map:
                 elif j == 1 or j == self.game.NUM_TILES_HEIGHT - 2:
                     self.set_tile(i, j, "hori")
                 else:
-                    # self.set_tile(i, j, "in_bounds")
-                    pass
+                    self.set_tile(i, j, "in_bounds")
 
         self.set_tile(2, 1, "corner,down_right")
         self.set_tile(self.game.NUM_TILES_WIDTH - 3, 1, "corner,down_left")

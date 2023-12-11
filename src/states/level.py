@@ -44,6 +44,7 @@ class Level(State):
     def render(self, display):
         display.blit(self.map.background_image, (0, 0))
         display.blit(self.map.background, (0, 0))
+        #display.blit(self.map.background_image, (0, 0))
         self.player.render(display)
         self.enemies.draw(display)
         self.bullets.draw(display)
