@@ -35,6 +35,10 @@ class Tank(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0, -1).rotate(-self.angle)
 
     def move(self, direction, walls):
+        if check_tank_moving_sound():
+            pass
+        else:
+            tank_moving_sound()
         new_position = self.rect.copy()
         new_position.move_ip(direction * self.FORWARD_VELOCITY)
         if not self.check_collisions(new_position, walls):

@@ -12,7 +12,7 @@ def load_sounds():
     # Load all sounds here
     sounds['tank_shoot'] = pygame.mixer.Sound('assets/audio/TankBullet.mp3')
     sounds['game_background'] = pygame.mixer.Sound('assets/audio/GameBackground.mp3')
-    sounds['tank_move'] = pygame.mixer.Sound('assets/audio/TankMoving.mp3')
+    sounds['tank_move'] = pygame.mixer.Sound('assets/audio/TankMovingShort.mp3')
     sounds['tank_explosion'] = pygame.mixer.Sound('assets/audio/TankExplosion.mp3')
     sounds['round_start'] = pygame.mixer.Sound('assets/audio/RoundStart.mp3')
 
@@ -41,6 +41,14 @@ def tank_moving_sound():
 
 def stop_tank_moving_sound():
     sounds['tank_move'].stop()
+
+
+def check_tank_moving_sound():
+    # check to see if the sound is playing, return true if it is
+    if sounds['tank_move'].get_num_channels() > 0:
+        return True
+    else:
+        return False
 
 
 def tank_explosion_sound():
