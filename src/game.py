@@ -5,6 +5,8 @@ import pygame
 from states.level import Level
 from states.title import Title
 
+from level.audio import *
+
 
 class Game:
     def __init__(self):
@@ -34,9 +36,15 @@ class Game:
             2: Level(self, number=2, status='unlocked'),
             3: Level(self, number=3, status='unlocked'),
         }
+        
+        
 
     def game_loop(self):
         while self.playing:
+            #check to see if the specific background music is playing and if not play i
+            #if pygame.mixer.music.get_busy() == False:
+            game_background_sound()
+                
             self.get_dt()
             self.get_events()
             self.update()
@@ -116,6 +124,8 @@ class Game:
         self.sprite_dir = os.path.join(self.assets_dir, "sprites")
         self.font = pygame.font.Font(None, 72)
         self.font_button = pygame.font.Font(None, 48)
+        # Load all sounds
+        load_sounds()
 
     def load_states(self):
         self.title_screen = Title(self)

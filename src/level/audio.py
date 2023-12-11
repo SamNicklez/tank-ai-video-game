@@ -16,7 +16,7 @@ def load_sounds():
     sounds['round_start'] = pygame.mixer.Sound('assets/audio/RoundStart.mp3')
     
     # Set the volume for all sounds
-    sounds['game_background'].set_volume(0.3)
+    sounds['game_background'].set_volume(0.1)
     sounds['tank_shoot'].set_volume(0.4)
     sounds['tank_move'].set_volume(0.4)
     sounds['tank_explosion'].set_volume(0.4)
@@ -25,16 +25,16 @@ def load_sounds():
 # Function to play a sound
 def play_sound(sound_name):
     if sound_name in sounds:
+        #if sounds['game_background']:
+        #    sounds['game_background'].set_volume(0.2)
         sounds[sound_name].play()
-        print("In here")
     else:
         print(f"No sound loaded for {sound_name}")
 
 
 # Tank Sounds 
 def tank_moving_sound():
-    while True:
-        play_sound('tank_move')
+    play_sound('tank_move')
         
 def stop_tank_moving_sound():
     sounds['tank_move'].stop()        
@@ -50,25 +50,12 @@ def round_start_sound():
     play_sound('round_start')
 
 def game_background_sound():
-    while True:
-        play_sound('game_background')
+    play_sound('game_background')
 
 def stop_game_background_sound():
     sounds['game_background'].stop()            
     
     
-# Load all sounds at the beginning
-load_sounds()
 
-# Play a sound by passing the sound name to the function
-round_start_sound()
-pygame.time.delay(5000)
-play_sound('tank_shoot')  # This will play the GunRocketStart.mp3 sound
-play_sound('game_background')
-play_sound('tank_move')
-pygame.time.delay(5000)
-stop_game_background_sound()
-tank_shoot_sound()
-pygame.time.delay(5000)
 
 
