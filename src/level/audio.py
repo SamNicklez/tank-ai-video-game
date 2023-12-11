@@ -9,11 +9,11 @@ sounds = {}
 # Function to load sounds
 def load_sounds():
     # Load all sounds here
-    sounds['tank_shoot'] = pygame.mixer.Sound('src/assets/audio/TankBullet.mp3')
-    sounds['game_background'] = pygame.mixer.Sound('src/assets/audio/GameBackground.mp3')
-    sounds['tank_move'] = pygame.mixer.Sound('src/assets/audio/TankMoving.mp3')
-    sounds['tank_explosion'] = pygame.mixer.Sound('src/assets/audio/TankExplosion.mp3')
-    sounds['round_start'] = pygame.mixer.Sound('src/assets/audio/RoundStart.mp3')
+    sounds['tank_shoot'] = pygame.mixer.Sound('assets/audio/TankBullet.mp3')
+    sounds['game_background'] = pygame.mixer.Sound('assets/audio/GameBackground.mp3')
+    sounds['tank_move'] = pygame.mixer.Sound('assets/audio/TankMoving.mp3')
+    sounds['tank_explosion'] = pygame.mixer.Sound('assets/audio/TankExplosion.mp3')
+    sounds['round_start'] = pygame.mixer.Sound('assets/audio/RoundStart.mp3')
     
     # Set the volume for all sounds
     sounds['game_background'].set_volume(0.3)
