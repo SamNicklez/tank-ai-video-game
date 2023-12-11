@@ -9,6 +9,8 @@ from moviepy.editor import VideoFileClip
 from states.level import Level
 from states.title import Title
 
+from level.audio import *
+
 
 class Game:
     def __init__(self):
@@ -45,6 +47,11 @@ class Game:
 
     def game_loop(self):
         while self.playing:
+            # check if background sound is playing
+            if check_background_sound():
+                pass
+            else:
+                game_background_sound()
             self.get_dt()
             self.get_events()
             self.update()
@@ -124,6 +131,8 @@ class Game:
         self.sprite_dir = os.path.join(self.assets_dir, "sprites")
         self.font = pygame.font.Font(None, 72)
         self.font_button = pygame.font.Font(None, 48)
+        # Load all sounds
+        load_sounds()
 
     def load_states(self):
         self.title_screen = Title(self)
@@ -160,6 +169,7 @@ class Game:
         # Close the clip after playing
         resized_clip.close()
         pygame.mixer.music.stop()
+
 
 if __name__ == "__main__":
 

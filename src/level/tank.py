@@ -2,6 +2,7 @@ import pygame
 
 from level.bullet import Bullet
 
+from level.audio import *
 
 class Tank(pygame.sprite.Sprite):
     def __init__(self, game, image_path, start_pos, start_angle, bullets_group, walls):
@@ -22,6 +23,7 @@ class Tank(pygame.sprite.Sprite):
         self.ROTATION_SPEED = 4
         self.shoot_cooldown = 1000
         self.last_shot_time = 0
+        load_sounds()
 
     def rotate(self, angle):
         self.angle += angle
@@ -33,6 +35,10 @@ class Tank(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0, -1).rotate(-self.angle)
 
     def move(self, direction, walls):
+        if check_tank_moving_sound():
+            pass
+        else:
+            tank_moving_sound()
         new_position = self.rect.copy()
         new_position.move_ip(direction * self.FORWARD_VELOCITY)
         if not self.check_collisions(new_position, walls):
@@ -50,6 +56,7 @@ class Tank(pygame.sprite.Sprite):
         display.blit(self.image, self.rect.topleft)
 
     def shoot(self):
+        tank_shoot_sound()
         bullet_start_pos = self.rect.center + self.direction * 40
         new_bullet = Bullet(self.game, self.walls, bullet_start_pos, self.angle)
         self.bullets_group.add(new_bullet)
