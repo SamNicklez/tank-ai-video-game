@@ -8,15 +8,16 @@ sounds = {}
 
 # Function to load sounds
 def load_sounds():
-    sounds['gun'] = pygame.mixer.Sound('assets/audio/GunRocketStart.mp3')
-    sounds['round'] = pygame.mixer.Sound('assets/audio/RoundStart.mp3')
-    sounds['tank'] = pygame.mixer.Sound('assets/audio/TankMoving.mp3')
+    sounds['tank_shoot'] = pygame.mixer.Sound('src/assets/audio/TankBullet.mp3')
+    sounds['game_background'] = pygame.mixer.Sound('src/assets/audio/GameBackground.mp3')
+    sounds['tank_move'] = pygame.mixer.Sound('src/assets/audio/TankMoving.mp3')
     # Add all other sounds you want to load
 
 # Function to play a sound
 def play_sound(sound_name):
     if sound_name in sounds:
         sounds[sound_name].play()
+        print("In here")
     else:
         print(f"No sound loaded for {sound_name}")
 
@@ -24,4 +25,4 @@ def play_sound(sound_name):
 load_sounds()
 
 # Play a sound by passing the sound name to the function
-play_sound('gun')  # This will play the GunRocketStart.mp3 sound
+play_sound('tank_shoot')  # This will play the GunRocketStart.mp3 sound
