@@ -174,6 +174,6 @@ class Game:
 if __name__ == "__main__":
 
     g = Game()
-    #Game.intro(g)
+    Game.intro(g)
     while g.running:
         g.game_loop()
