@@ -18,7 +18,6 @@ class Map:
         self.wall_positions = []
 
         self.out_of_bounds_texture = None
-        self.in_bounds_texture = None
         self.wall_textures = {
             'vert': None,
             'hori': None,
@@ -43,9 +42,6 @@ class Map:
             self.tiles[y][x] = tile_type
             if main_type[0] == 'out_of_bounds':
                 self.background.blit(self.out_of_bounds_texture, (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
-            elif main_type[0] == 'in_bounds':
-                #self.background.blit(self.in_bounds_texture, (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
-                pass
             else:
                 self.wall_positions.append(
                     pygame.Rect(x * self.game.TILE_SIZE, y * self.game.TILE_SIZE, self.game.TILE_SIZE, self.game.TILE_SIZE))
@@ -78,8 +74,6 @@ class Map:
                     self.set_tile(i, j, "vert")
                 elif j == 1 or j == self.game.NUM_TILES_HEIGHT - 2:
                     self.set_tile(i, j, "hori")
-                else:
-                    self.set_tile(i, j, "in_bounds")
 
         self.set_tile(2, 1, "corner,down_right")
         self.set_tile(self.game.NUM_TILES_WIDTH - 3, 1, "corner,down_left")
@@ -87,42 +81,94 @@ class Map:
         self.set_tile(self.game.NUM_TILES_WIDTH - 3, self.game.NUM_TILES_HEIGHT - 2, "corner,up_left")
 
     def map_wall_1(self):
-        for i in range(6, 8):
-            self.set_tile(i, 7, "hori")
-        for j in range(5, 7):
-            self.set_tile(8, j, "vert")
-        self.set_tile(8, 7, "corner,up_left")
+        # All chained horizontal walls
+        for i in range(12, 27):
+            self.set_tile(i, 6, "hori")
+            self.set_tile(i, 16, "hori")
+        for i in range(19, 21):
+            self.set_tile(i, 10, "hori")
+            self.set_tile(i, 13, "hori")
 
-        for i in range(self.game.NUM_TILES_WIDTH - 8, self.game.NUM_TILES_WIDTH - 6):
-            self.set_tile(i, self.game.NUM_TILES_HEIGHT - 8, "hori")
-        for j in range(self.game.NUM_TILES_HEIGHT - 7, self.game.NUM_TILES_HEIGHT - 5):
-            self.set_tile(self.game.NUM_TILES_WIDTH - 9, j, "vert")
-        self.set_tile(self.game.NUM_TILES_WIDTH - 9, self.game.NUM_TILES_HEIGHT - 8, "corner,down_right")
+        # All chained vertical walls
+        for j in range(7, 10):
+            self.set_tile(12, j, "vert")
+            self.set_tile(27, j, "vert")
+        for j in range(14, 17):
+            self.set_tile(12, j, "vert")
+            self.set_tile(27, j, "vert")
+        for j in range(11, 13):
+            self.set_tile(18, j, "vert")
+            self.set_tile(21, j, "vert")
+
+        # Corners on chained outer walls
+        self.set_tile(12, 6, "corner,down_right")
+        self.set_tile(27, 6, "corner,down_left")
+        self.set_tile(12, 16, "corner,up_right")
+        self.set_tile(27, 16, "corner,up_left")
+
+        # Corners on chained inner walls
+        self.set_tile(18, 10, "corner,down_right")
+        self.set_tile(21, 10, "corner,down_left")
+        self.set_tile(18, 13, "corner,up_right")
+        self.set_tile(21, 13, "corner,up_left")
+
+        # Left 2x2 boxes
+        self.draw_2x2_box(6, 5)
+        self.draw_2x2_box(7, 11)
+        self.draw_2x2_box(6, 17)
+
+        # Right 2x2 boxes
+        self.draw_2x2_box(32, 5)
+        self.draw_2x2_box(31, 11)
+        self.draw_2x2_box(32, 17)
 
     def map_wall_2(self):
-        for i in range(6, 8):
+        # All chained horizontal walls
+        for i in range(7, 18):
+            self.set_tile(i, 4, "hori")
+            self.set_tile(i, 19, "hori")
+        for i in range(22, 33):
+            self.set_tile(i, 4, "hori")
+            self.set_tile(i, 19, "hori")
+        for i in range(11, 19):
             self.set_tile(i, 7, "hori")
-        for j in range(5, 7):
-            self.set_tile(8, j, "vert")
-        self.set_tile(8, 7, "corner,up_left")
-
-        for i in range(self.game.NUM_TILES_WIDTH - 8, self.game.NUM_TILES_WIDTH - 6):
-            self.set_tile(i, self.game.NUM_TILES_HEIGHT - 8, "hori")
-        for j in range(self.game.NUM_TILES_HEIGHT - 7, self.game.NUM_TILES_HEIGHT - 5):
-            self.set_tile(self.game.NUM_TILES_WIDTH - 9, j, "vert")
-        self.set_tile(self.game.NUM_TILES_WIDTH - 9, self.game.NUM_TILES_HEIGHT - 8, "corner,down_right")
-
-        for i in range(6, 8):
-            self.set_tile(i, self.game.NUM_TILES_HEIGHT - 8, "hori")
-        for j in range(self.game.NUM_TILES_HEIGHT - 7, self.game.NUM_TILES_HEIGHT - 5):
-            self.set_tile(8, j, "vert")
-        self.set_tile(8, self.game.NUM_TILES_HEIGHT - 8, "corner,down_left")
-
-        for i in range(self.game.NUM_TILES_WIDTH - 8, self.game.NUM_TILES_WIDTH - 6):
+            self.set_tile(i, 16, "hori")
+        for i in range(21, 29):
             self.set_tile(i, 7, "hori")
-        for j in range(5, 7):
-            self.set_tile(self.game.NUM_TILES_WIDTH - 9, j, "vert")
-        self.set_tile(self.game.NUM_TILES_WIDTH - 9, 7, "corner,up_right")
+            self.set_tile(i, 16, "hori")
+
+        # All chained vertical walls
+        for j in range(5, 10):
+            self.set_tile(6, j, "vert")
+            self.set_tile(33, j, "vert")
+        for j in range(14, 19):
+            self.set_tile(6, j, "vert")
+            self.set_tile(33, j, "vert")
+        for j in range(8, 11):
+            self.set_tile(10, j, "vert")
+            self.set_tile(29, j, "vert")
+        for j in range(13, 16):
+            self.set_tile(10, j, "vert")
+            self.set_tile(29, j, "vert")
+
+        for j in range(10, 14):
+            self.set_tile(14, j, "vert")
+            self.set_tile(23, j, "vert")
+
+        # Corners on chained outer walls
+        self.set_tile(6, 4, "corner,down_right")
+        self.set_tile(33, 4, "corner,down_left")
+        self.set_tile(6, 19, "corner,up_right")
+        self.set_tile(33, 19, "corner,up_left")
+
+        # Corners on chained inner walls
+        self.set_tile(10, 7, "corner,down_right")
+        self.set_tile(29, 7, "corner,down_left")
+        self.set_tile(10, 16, "corner,up_right")
+        self.set_tile(29, 16, "corner,up_left")
+
+        # 2x2 box
+        self.draw_2x2_box(19, 11)
 
     def map_wall_3(self):
         for j in range(2, 20):
@@ -152,11 +198,14 @@ class Map:
         for j in range(2, 20):
             self.set_tile(31, j, "vert")
 
-
+    def draw_2x2_box(self, x, y):
+        self.set_tile(x, y, "corner,down_right")
+        self.set_tile(x + 1, y, "corner,down_left")
+        self.set_tile(x, y + 1, "corner,up_right")
+        self.set_tile(x + 1, y + 1, "corner,up_left")
 
     def load_textures(self):
         grass = pygame.image.load(f"{self.game.assets_dir}/map/grass.png")
-        tile = pygame.image.load(f"{self.game.assets_dir}/map/tile.png")
         wall = pygame.image.load(f"{self.game.assets_dir}/map/wall.png")
         wall_t = pygame.image.load(f"{self.game.assets_dir}/map/wall_t.png")
         wall_corner = pygame.image.load(f"{self.game.assets_dir}/map/wall_corner.png")
@@ -179,5 +228,4 @@ class Map:
         }
 
         self.out_of_bounds_texture = grass
-        self.in_bounds_texture = tile
         self.wall_textures = wall_textures

@@ -2,8 +2,6 @@ import os
 from PIL import Image
 import numpy as np
 
-import pygame
-
 from moviepy.editor import VideoFileClip
 
 from states.level import Level
