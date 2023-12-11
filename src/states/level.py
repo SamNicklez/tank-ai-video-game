@@ -23,6 +23,7 @@ class Level(State):
         if len(self.enemies) < 1:
             if self.number < len(self.game.levels):
                 self.game.levels[(self.number + 1)]['status'] = 'unlocked'
+                
             self.level_init()
             next_state = GameOver(self.game, True)
             next_state.enter_state()

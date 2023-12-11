@@ -24,7 +24,7 @@ class GameOver(State):
             you_won_sound()
             self.play_video(self.game)
         else:
-            you_lost_sound()
+            you_lost_sound() 
             self.play_video(self.game)
         
 
