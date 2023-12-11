@@ -32,7 +32,6 @@ class GameOver(State):
 
     def render(self, display):
         display.blit(self.background_image, (0, 0))
-        #display.fill((255, 255, 255))
 
         pygame.draw.rect(display, (0, 0, 128),
                          pygame.Rect(self.game.WIDTH // 2 - 200, self.game.HEIGHT // 2 - 250, 400, 500))
