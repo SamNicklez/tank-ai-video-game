@@ -1,6 +1,11 @@
 import pygame
 import os
 
+from PIL import Image
+import numpy as np
+
+from moviepy.editor import VideoFileClip
+
 from states.state import State
 
 
@@ -13,6 +18,39 @@ class GameOver(State):
         background_image_path = os.path.join(game.assets_dir, 'background_images', 'Video image 1.png')
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
+
+        # play the level completed clip
+        if win:
+            self.play_video(self.game)
+        else:
+            self.play_video(self.game)
+        
+
+    def play_video(self, game):
+
+        if self.win:
+            path = "videos/level_completed_video.mp4"
+        else:
+            path = "videos/level_failed_video.mp4"
+
+        # Function to resize each frame of the video
+        def resize_frame(frame):
+            pil_image = Image.fromarray(frame)
+            resized_image = pil_image.resize((game.WIDTH, game.HEIGHT), Image.Resampling.LANCZOS)
+            return np.array(resized_image)
+
+        # Load the video
+        intro_clip = VideoFileClip(os.path.join(game.assets_dir, path)).without_audio()
+
+        # Resize each frame
+        resized_clip = intro_clip.fl_image(resize_frame)
+
+        # Play the resized video
+        resized_clip.preview()
+
+        # Close the clip after playing
+        resized_clip.close()
+
 
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:
