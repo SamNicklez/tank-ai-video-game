@@ -7,7 +7,7 @@ import numpy as np
 from moviepy.editor import VideoFileClip
 
 from states.state import State
-
+from level.audio import *
 
 class GameOver(State):
     def __init__(self, game, win):
@@ -21,8 +21,10 @@ class GameOver(State):
 
         # play the level completed clip
         if win:
+            you_won_sound()
             self.play_video(self.game)
         else:
+            you_lost_sound()
             self.play_video(self.game)
         
 
