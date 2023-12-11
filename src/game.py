@@ -134,11 +134,6 @@ class Game:
             self.actions[action] = False
 
     def intro(self):
-        pygame.mixer.set_num_channels(2)
-        print("Mixer settings:", pygame.mixer.get_init())
-        #pygame.mixer.init(frequency=22050, size=-16, channels=2)  # for stereo
-
-
         # Function to resize each frame of the video
         def resize_frame(frame):
             pil_image = Image.fromarray(frame)
@@ -146,10 +141,16 @@ class Game:
             return np.array(resized_image)
 
         # Load the video
-        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'intro_video.mp4'))
+        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'intro_video.mp4')).without_audio()
 
-        number_of_channels = intro_clip.audio.nchannels
-        print(f"The video has {number_of_channels} audio channel(s)")
+
+        audio_path = os.path.join(self.assets_dir, "audio/intro_video_audio.mp3")
+        #intro_clip.audio.write_audiofile(audio_path)
+
+        # Initialize Pygame mixer and play the audio
+        pygame.mixer.init()
+        pygame.mixer.music.load(audio_path)
+        pygame.mixer.music.play()
 
         # Resize each frame
         resized_clip = intro_clip.fl_image(resize_frame)
@@ -159,6 +160,7 @@ class Game:
 
         # Close the clip after playing
         resized_clip.close()
+        pygame.mixer.music.stop()
 
 if __name__ == "__main__":
 
