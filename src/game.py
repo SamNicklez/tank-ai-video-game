@@ -12,7 +12,11 @@ from states.title import Title
 
 class Game:
     def __init__(self):
+        pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=512)
+    
+        # Initialize Pygame and the mixer
         pygame.init()
+        pygame.mixer.init()
 
         self.WIDTH = 1280
         self.HEIGHT = 768
@@ -130,6 +134,11 @@ class Game:
             self.actions[action] = False
 
     def intro(self):
+        pygame.mixer.set_num_channels(2)
+        print("Mixer settings:", pygame.mixer.get_init())
+        #pygame.mixer.init(frequency=22050, size=-16, channels=2)  # for stereo
+
+
         # Function to resize each frame of the video
         def resize_frame(frame):
             pil_image = Image.fromarray(frame)
@@ -138,6 +147,9 @@ class Game:
 
         # Load the video
         intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'intro_video.mp4'))
+
+        number_of_channels = intro_clip.audio.nchannels
+        print(f"The video has {number_of_channels} audio channel(s)")
 
         # Resize each frame
         resized_clip = intro_clip.fl_image(resize_frame)
@@ -149,7 +161,7 @@ class Game:
         resized_clip.close()
 
 if __name__ == "__main__":
-    
+
     g = Game()
     Game.intro(g)
     while g.running:
