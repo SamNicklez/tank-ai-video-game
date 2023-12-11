@@ -1,4 +1,5 @@
 import pygame
+import os
 
 from states.state import State
 from level.audio import *
@@ -7,6 +8,10 @@ class LevelSelect(State):
     def __init__(self, game):
         State.__init__(self, game)
         self.index = 1
+
+        background_image_path = os.path.join(game.assets_dir, 'background_images', 'Video image 1.png')
+        self.background_image = pygame.image.load(background_image_path).convert()
+        self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:
@@ -55,7 +60,8 @@ class LevelSelect(State):
         self.game.reset_keys()
 
     def render(self, display):
-        display.fill((255, 255, 255))
+        display.blit(self.background_image, (0, 0))
+        #display.fill((255, 255, 255))
 
         pygame.draw.rect(display, (0, 0, 128),
                          pygame.Rect(self.game.WIDTH // 2 - 200, self.game.HEIGHT // 2 - 250, 400, 500))
