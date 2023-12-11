@@ -7,6 +7,8 @@ from states.game_over import GameOver
 from states.pause_menu import PauseMenu
 from states.state import State
 
+from level.audio import *
+
 
 class Level(State):
     def __init__(self, game, number, status='locked'):
@@ -29,6 +31,7 @@ class Level(State):
             next_state = GameOver(self.game, True)
             next_state.enter_state()
         if self.player.health <= 0:
+            tank_explosion_sound()
             self.level_init()
             next_state = GameOver(self.game, False)
             next_state.enter_state()
@@ -85,6 +88,8 @@ class Level(State):
 
             self.spawn_enemy((self.game.WIDTH - 5 * self.game.TILE_SIZE, self.game.HEIGHT - 4 * self.game.TILE_SIZE),
                              45)
+        
+        
 
 
 

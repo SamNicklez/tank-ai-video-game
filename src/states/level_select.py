@@ -2,7 +2,7 @@ import pygame
 import os
 
 from states.state import State
-
+from level.audio import *
 
 class LevelSelect(State):
     def __init__(self, game):
@@ -19,6 +19,7 @@ class LevelSelect(State):
                 if self.game.levels[self.index].status == 'unlocked':
                     new_state = self.game.levels[self.index]
                     new_state.enter_state()
+                    round_start_sound()    
             else:
                 self.exit_state()
         if actions["up"] & actions["down"]:
