@@ -40,15 +40,14 @@ class Game:
             2: Level(self, number=2, status='unlocked'),
             3: Level(self, number=3, status='unlocked'),
         }
-        
-        
 
     def game_loop(self):
         while self.playing:
-            #check to see if the specific background music is playing and if not play i
-            #if pygame.mixer.music.get_busy() == False:
-            game_background_sound()
-                
+            # check if background sound is playing
+            if check_background_sound():
+                pass
+            else:
+                game_background_sound()
             self.get_dt()
             self.get_events()
             self.update()
@@ -158,9 +157,10 @@ class Game:
         # Close the clip after playing
         resized_clip.close()
 
+
 if __name__ == "__main__":
-    
+
     g = Game()
-    Game.intro(g)
+    # Game.intro(g)
     while g.running:
         g.game_loop()
