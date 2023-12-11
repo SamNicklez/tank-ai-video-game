@@ -1,10 +1,15 @@
 import pygame
+import os
 
 
 class Map:
     def __init__(self, game, number):
         self.game = game
         self.number = number
+
+        background_image_path = os.path.join(game.assets_dir, 'background_images', 'Partial Floor.png')
+        self.background_image = pygame.image.load(background_image_path).convert()
+        self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 
         self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT))
 
@@ -31,13 +36,15 @@ class Map:
         }
 
     def set_tile(self, x, y, tile_type):
+        
         main_type = tile_type.split(',')
         if 0 <= x < self.game.NUM_TILES_WIDTH and 0 <= y < self.game.NUM_TILES_HEIGHT:
             self.tiles[y][x] = tile_type
             if main_type[0] == 'out_of_bounds':
                 self.background.blit(self.out_of_bounds_texture, (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
             elif main_type[0] == 'in_bounds':
-                self.background.blit(self.in_bounds_texture, (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
+                #self.background.blit(self.in_bounds_texture, (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
+                pass
             else:
                 self.wall_positions.append(
                     pygame.Rect(x * self.game.TILE_SIZE, y * self.game.TILE_SIZE, self.game.TILE_SIZE, self.game.TILE_SIZE))
@@ -69,7 +76,8 @@ class Map:
                 elif j == 1 or j == self.game.NUM_TILES_HEIGHT - 2:
                     self.set_tile(i, j, "hori")
                 else:
-                    self.set_tile(i, j, "in_bounds")
+                    # self.set_tile(i, j, "in_bounds")
+                    pass
 
         self.set_tile(2, 1, "corner,down_right")
         self.set_tile(self.game.NUM_TILES_WIDTH - 3, 1, "corner,down_left")
