@@ -58,6 +58,10 @@ class Controls(State):
 
         self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
 
+        self.game.draw_controls_text(display, "Shoot/Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 250)
+        self.game.draw_controls_text(display, "Pause", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 100)
+        #self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+
         self.game.draw_button(display, "Back",
                                   (0, 255, 0), (255, 255, 255),
                                   self.game.WIDTH // 2 + 65,

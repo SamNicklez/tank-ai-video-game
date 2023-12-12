@@ -118,6 +118,12 @@ class Game:
         text_rect.center = (x, y)
         surface.blit(text_surface, text_rect)
 
+    def draw_controls_text(self, surface, text, color, x, y):
+        text_surface = self.font_controls.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
+        surface.blit(text_surface, text_rect)
+
     def draw_button(self, surface, text, button_color, text_color, x, y, width, height, button_width=2,
                     button_height=6):
         button = pygame.Rect(x, y, width, height)
@@ -136,6 +142,7 @@ class Game:
         self.assets_dir = os.path.join("assets")
         self.sprite_dir = os.path.join(self.assets_dir, "sprites")
         self.font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 70)
+        self.font_controls = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 30)
         self.font_button = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 42)
         self.title_font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 120)
         # Load all sounds
