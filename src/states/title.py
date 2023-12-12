@@ -3,9 +3,9 @@ import sys
 
 import pygame
 
+from states.controls import Controls
 from states.level_select import LevelSelect
 from states.state import State
-from states.controls import Controls
 
 
 class Title(State):

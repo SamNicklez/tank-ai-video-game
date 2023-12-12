@@ -43,16 +43,18 @@ def tank_moving_sound():
 
 def stop_tank_moving_sound():
     sounds['tank_move'].stop()
-    
+
+
 def stop_all_sounds():
     pygame.mixer.stop()
 
 
 def you_lost_sound():
-    play_sound('you_lost')  
-    
+    play_sound('you_lost')
+
+
 def you_won_sound():
-    play_sound('you_won')          
+    play_sound('you_won')
 
 
 def check_tank_moving_sound():

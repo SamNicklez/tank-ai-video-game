@@ -1,5 +1,6 @@
-import pygame
 import os
+
+import pygame
 
 
 class Map:
@@ -11,10 +12,10 @@ class Map:
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 
-        #self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT))
         self.background = pygame.Surface((self.game.WIDTH, self.game.HEIGHT), pygame.SRCALPHA)
 
-        self.tiles = [[None for _ in range(self.game.WIDTH // self.game.TILE_SIZE)] for _ in range(self.game.HEIGHT // self.game.TILE_SIZE)]
+        self.tiles = [[None for _ in range(self.game.WIDTH // self.game.TILE_SIZE)] for _ in
+                      range(self.game.HEIGHT // self.game.TILE_SIZE)]
         self.wall_positions = []
 
         self.out_of_bounds_texture = None
@@ -44,7 +45,8 @@ class Map:
                 self.background.blit(self.out_of_bounds_texture, (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
             else:
                 self.wall_positions.append(
-                    pygame.Rect(x * self.game.TILE_SIZE, y * self.game.TILE_SIZE, self.game.TILE_SIZE, self.game.TILE_SIZE))
+                    pygame.Rect(x * self.game.TILE_SIZE, y * self.game.TILE_SIZE, self.game.TILE_SIZE,
+                                self.game.TILE_SIZE))
                 if main_type[0] == 'vert' or main_type[0] == 'hori':
                     self.background.blit(self.wall_textures[main_type[0]],
                                          (x * self.game.TILE_SIZE, y * self.game.TILE_SIZE))
@@ -64,7 +66,8 @@ class Map:
     def perimeter(self):
         for i in range(self.game.NUM_TILES_WIDTH):
             for j in range(self.game.NUM_TILES_HEIGHT):
-                if (i < 2) or (i > (self.game.NUM_TILES_WIDTH - 3)) or (j < 1) or (j > (self.game.NUM_TILES_HEIGHT - 2)):
+                if (i < 2) or (i > (self.game.NUM_TILES_WIDTH - 3)) or (j < 1) or (
+                        j > (self.game.NUM_TILES_HEIGHT - 2)):
                     self.set_tile(i, j, "out_of_bounds")
                 pass
 

@@ -1,13 +1,12 @@
-import pygame
 import os
 
-from PIL import Image
 import numpy as np
-
+from PIL import Image
 from moviepy.editor import VideoFileClip
 
-from states.state import State
 from level.audio import *
+from states.state import State
+
 
 class GameOver(State):
     def __init__(self, game, win):
@@ -28,9 +27,8 @@ class GameOver(State):
             you_won_sound()
             self.play_video(self.game)
         else:
-            you_lost_sound() 
+            you_lost_sound()
             self.play_video(self.game)
-        
 
     def play_video(self, game):
 
@@ -56,7 +54,6 @@ class GameOver(State):
 
         # Close the clip after playing
         resized_clip.close()
-
 
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:

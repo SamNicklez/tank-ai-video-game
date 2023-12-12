@@ -71,23 +71,24 @@ class Level(State):
         if self.number == 1:
             self.player = Player(
                 self.game,
-                (4 * self.game.TILE_SIZE, 11 * self.game.TILE_SIZE),
+                (4 * self.game.TILE_SIZE,
+                 11 * self.game.TILE_SIZE),
                 270,
                 self.bullets,
                 self.visual_effects,
                 self.map.wall_positions
             )
 
-            self.spawn_enemy((
-                35 * self.game.TILE_SIZE,
-                12 * self.game.TILE_SIZE
-            ),
+            self.spawn_enemy(
+                (35 * self.game.TILE_SIZE,
+                 12 * self.game.TILE_SIZE),
                 90
             )
         elif self.number == 2:
             self.player = Player(
                 self.game,
-                (20 * self.game.TILE_SIZE, 20 * self.game.TILE_SIZE),
+                (20 * self.game.TILE_SIZE,
+                 20 * self.game.TILE_SIZE),
                 0,
                 self.bullets,
                 self.visual_effects,
@@ -107,40 +108,34 @@ class Level(State):
                 180
             )
         elif self.number == 3:
-            self.player = Player(self.game,
-                                 (5 * self.game.TILE_SIZE,
-                                  18 * self.game.TILE_SIZE),
-                                 180,
-                                 self.bullets,
-                                 self.visual_effects,
-                                 self.map.wall_positions)
+            self.player = Player(
+                self.game,
+                (5 * self.game.TILE_SIZE,
+                 18 * self.game.TILE_SIZE),
+                180,
+                self.bullets,
+                self.visual_effects,
+                self.map.wall_positions
+            )
 
             self.spawn_enemy(
-                (
-                    4 * self.game.TILE_SIZE,
-                    3 * self.game.TILE_SIZE
-                ),
+                (4 * self.game.TILE_SIZE,
+                 3 * self.game.TILE_SIZE),
                 270, True
             )
             self.spawn_enemy(
-                (
-                    28 * self.game.TILE_SIZE,
-                    6 * self.game.TILE_SIZE
-                ),
+                (28 * self.game.TILE_SIZE,
+                 6 * self.game.TILE_SIZE),
                 90, True
             )
             self.spawn_enemy(
-                (
-                    35 * self.game.TILE_SIZE,
-                    3 * self.game.TILE_SIZE
-                ),
+                (35 * self.game.TILE_SIZE,
+                 3 * self.game.TILE_SIZE),
                 180, True
             )
             self.spawn_enemy(
-                (
-                    35 * self.game.TILE_SIZE,
-                    18 * self.game.TILE_SIZE
-                ),
+                (35 * self.game.TILE_SIZE,
+                 18 * self.game.TILE_SIZEl),
                 180, True
             )
 

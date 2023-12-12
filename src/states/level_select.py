@@ -1,8 +1,8 @@
 import os
 
+from level.audio import *
 from states.level import Level
 from states.state import State
-from level.audio import *
 
 
 class LevelSelect(State):
@@ -28,7 +28,7 @@ class LevelSelect(State):
                     else:
                         new_state = self.game.levels[self.index]['level']
                     new_state.enter_state()
-                    round_start_sound()    
+                    round_start_sound()
             else:
                 self.exit_state()
         if actions["up"] & actions["down"]:

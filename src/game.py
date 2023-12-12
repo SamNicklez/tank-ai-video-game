@@ -5,7 +5,6 @@ from PIL import Image
 from moviepy.editor import VideoFileClip
 
 from level.audio import *
-from states.controls import Controls
 from states.title import Title
 
 
@@ -53,11 +52,6 @@ class Game:
 
     def game_loop(self):
         while self.playing:
-            # check if background sound is playing
-            if check_background_sound():
-                pass
-            else:
-                game_background_sound()
             self.get_dt()
             self.get_events()
             self.update()

@@ -48,10 +48,18 @@ class Controls(State):
 
     def render(self, display):
         display.blit(self.background_image, (0, 0))
-        display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
+        display.blit(self.menu_image,
+                     (self.game.WIDTH // 2 - 336,
+                      self.game.HEIGHT // 2 - 384)
+                     )
 
-        display.blit(self.space_bar_image, (self.game.WIDTH // 2 - 150 - 15, self.game.HEIGHT // 2 - 285))
-        display.blit(self.esc_image, (self.game.WIDTH // 2 + 15, self.game.HEIGHT // 2 - 285))
+        display.blit(self.space_bar_image,
+                     (self.game.WIDTH // 2 - 150 - 15,
+                      self.game.HEIGHT // 2 - 285))
+        display.blit(self.esc_image,
+                     (self.game.WIDTH // 2 + 15,
+                      self.game.HEIGHT // 2 - 285)
+                     )
 
         display.blit(self.up_arrow_image,
                      (self.game.WIDTH // 2 - 35,

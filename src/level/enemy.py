@@ -7,8 +7,10 @@ from level.tank import Tank
 
 
 class Enemy(Tank):
-    def __init__(self, game, start_pos, start_angle, player, bullets_group, visual_effects, walls, lower_pathfinding=False):
-        Tank.__init__(self, game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group, visual_effects,
+    def __init__(self, game, start_pos, start_angle, player, bullets_group, visual_effects, walls,
+                 lower_pathfinding=False):
+        Tank.__init__(self, game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group,
+                      visual_effects,
                       walls)
 
         self.player = player
@@ -68,8 +70,6 @@ class Enemy(Tank):
             self.last_pathfinding_time = current_time
         self.path_index = 1
         self.state = "pathing"
-
-
 
     def move_along_path(self):
         if self.path_index < len(self.path):

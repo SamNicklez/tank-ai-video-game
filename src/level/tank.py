@@ -1,8 +1,5 @@
-import pygame
-
-from level.bullet import Bullet
-
 from level.audio import *
+from level.bullet import Bullet
 
 
 class Tank(pygame.sprite.Sprite):
@@ -60,5 +57,11 @@ class Tank(pygame.sprite.Sprite):
     def shoot(self):
         tank_shoot_sound()
         bullet_start_pos = self.rect.center + self.direction * 15
-        new_bullet = Bullet(self.game, self.walls, bullet_start_pos, self.angle, self.visual_effects_group)
+        new_bullet = Bullet(
+            self.game,
+            self.walls,
+            bullet_start_pos,
+            self.angle,
+            self.visual_effects_group
+        )
         self.bullets_group.add(new_bullet)
