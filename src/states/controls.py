@@ -27,18 +27,22 @@ class Controls(State):
         self.esc_image = pygame.transform.scale(self.esc_image, (150, 75))
 
         arrow_path = os.path.join(game.assets_dir, 'background_images', 'ArrowKeyImage.png')
-        self.up_arrow_image = pygame.image.load(arrow_path).convert()
-        self.up_arrow_image = pygame.transform.scale(self.up_arrow_image, (75, 75))
-
-        self.down_arrow_image = pygame.image.load(arrow_path).convert()
-        self.down_arrow_image = pygame.transform.scale(self.down_arrow_image, (75, 75))
-
-        self.right_arrow_image = pygame.image.load(arrow_path).convert()
-        self.right_arrow_image = pygame.transform.scale(self.right_arrow_image, (75, 75))
 
         arrow_path = os.path.join(game.assets_dir, 'background_images', 'ArrowKeyImage.png')
+        self.up_arrow_image = pygame.image.load(arrow_path).convert()
+        self.up_arrow_image = pygame.transform.scale(self.up_arrow_image, (70, 70))
+
+        self.down_arrow_image = pygame.image.load(arrow_path).convert()
+        self.down_arrow_image = pygame.transform.scale(self.down_arrow_image, (70, 70))
+        self.down_arrow_image = pygame.transform.rotate(self.down_arrow_image, 180)
+
+        self.right_arrow_image = pygame.image.load(arrow_path).convert()
+        self.right_arrow_image = pygame.transform.scale(self.right_arrow_image, (70, 70))
+        self.right_arrow_image = pygame.transform.rotate(self.right_arrow_image, 270)
+
         self.left_arrow_image = pygame.image.load(arrow_path).convert()
-        self.left_arrow_image = pygame.transform.scale(self.left_arrow_image, (75, 75))
+        self.left_arrow_image = pygame.transform.scale(self.left_arrow_image, (70, 70))
+        self.left_arrow_image = pygame.transform.rotate(self.left_arrow_image, 90)
 
 
     def update(self, delta_time, actions):
@@ -52,15 +56,31 @@ class Controls(State):
 
         display.blit(self.space_bar_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 200))
 
-        display.blit(self.esc_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 50))
-    
-        display.blit(self.up_arrow_image, (self.game.WIDTH // 2 - 150, self.game.HEIGHT // 2 - 50))
+        # display.blit(self.esc_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 50))
 
-        self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+        display.blit(self.up_arrow_image,
+                     (self.game.WIDTH // 2 - 35,
+                      self.game.HEIGHT // 2 - 100)
+                     )
+        display.blit(self.down_arrow_image,
+                     (self.game.WIDTH // 2 - 35,
+                      self.game.HEIGHT // 2 - 30)
+                     )
+        display.blit(self.right_arrow_image,
+                     (self.game.WIDTH // 2 - 35 + 70,
+                      self.game.HEIGHT // 2 - 30)
+                     )
+        display.blit(self.left_arrow_image,
+                     (self.game.WIDTH // 2 - 35 - 70,
+                      self.game.HEIGHT // 2 - 30)
+                     )
+        
 
-        self.game.draw_controls_text(display, "Shoot/Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 250)
-        self.game.draw_controls_text(display, "Pause", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 100)
-        #self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+        # self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+
+        # self.game.draw_controls_text(display, "Shoot/Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 250)
+        # self.game.draw_controls_text(display, "Pause", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 100)
+        # #self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
 
         self.game.draw_button(display, "Back",
                                   (0, 255, 0), (255, 255, 255),

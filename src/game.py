@@ -5,6 +5,7 @@ from PIL import Image
 from moviepy.editor import VideoFileClip
 
 from level.audio import *
+from states.controls import Controls
 from states.title import Title
 
 
@@ -151,6 +152,7 @@ class Game:
     def load_states(self):
         self.title_screen = Title(self)
         self.state_stack.append(self.title_screen)
+        self.state_stack.append(Controls(self))
 
     def reset_keys(self):
         for action in self.actions:
@@ -187,6 +189,6 @@ class Game:
 if __name__ == "__main__":
 
     g = Game()
-    Game.intro(g)
+    # Game.intro(g)
     while g.running:
         g.game_loop()
