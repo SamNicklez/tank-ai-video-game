@@ -43,11 +43,11 @@ class Game:
             },
             2: {
                 'level': None,
-                'status': 'unlocked'
+                'status': 'locked'
             },
             3: {
                 'level': None,
-                'status': 'unlocked'
+                'status': 'locked'
             },
         }
 
@@ -152,7 +152,6 @@ class Game:
     def load_states(self):
         self.title_screen = Title(self)
         self.state_stack.append(self.title_screen)
-        self.state_stack.append(Controls(self))
 
     def reset_keys(self):
         for action in self.actions:

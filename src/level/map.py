@@ -171,32 +171,108 @@ class Map:
         self.draw_2x2_box(19, 11)
 
     def map_wall_3(self):
-        for j in range(2, 20):
-            self.set_tile(7, j, "vert")
+        # All chained horizontal walls
+        for i in range(3, 9):
+            self.set_tile(i, 4, "hori")
+        for i in range(25, 30):
+            self.set_tile(i, 4, "hori")
+        for i in range(7, 15):
+            self.set_tile(i, 10, "hori")
+        for i in range(6, 16):
+            self.set_tile(i, 13, "hori")
+        for i in range(15, 21):
+            self.set_tile(i, 16, "hori")
+        for i in range(13, 16):
+            self.set_tile(i, 19, "hori")
+        for i in range(3, 6):
+            self.set_tile(i, 16, "hori")
+        for i in range(21, 24):
+            self.set_tile(i, 19, "hori")
+        for i in range(25, 30):
+            self.set_tile(i, 16, "hori")
+        for i in range(34, 37):
+            self.set_tile(i, 16, "hori")
+        for i in range(27, 30):
+            self.set_tile(i, 7, "hori")
+        for i in range(25, 31):
+            self.set_tile(i, 10, "hori")
+        for i in range(30, 33):
+            self.set_tile(i, 13, "hori")
+        for i in range(10, 13):
+            self.set_tile(i, 7, "hori")
+        for i in range(22, 25):
+            self.set_tile(i, 13, "hori")
 
-        for j in range(4, 22):
-            self.set_tile(10, j, "vert")
+        # All chained vertical walls
+        for j in range(2, 5):
+            self.set_tile(12, j, "vert")
+            self.set_tile(18, j, "vert")
+        for j in range(5, 7):
+            self.set_tile(9, j, "vert")
+        for j in range(4, 10):
+            self.set_tile(15, j, "vert")
+        for j in range(5, 11):
+            self.set_tile(21, j, "vert")
+        for j in range(5, 10):
+            self.set_tile(24, j, "vert")
+        for j in range(5, 7):
+            self.set_tile(30, j, "vert")
+        for j in range(4, 13):
+            self.set_tile(33, j, "vert")
+        for j in range(8, 14):
+            self.set_tile(18, j, "vert")
+        for j in range(7, 10):
+            self.set_tile(6, j, "vert")
+        for j in range(17, 20):
+            self.set_tile(6, j, "vert")
+        for j in range(16, 22):
+            self.set_tile(9, j, "vert")
+        for j in range(14, 19):
+            self.set_tile(12, j, "vert")
+        for j in range(17, 20):
+            self.set_tile(18, j, "vert")
+        for j in range(14, 16):
+            self.set_tile(21, j, "vert")
+        for j in range(17, 19):
+            self.set_tile(24, j, "vert")
+        for j in range(17, 20):
+            self.set_tile(30, j, "vert")
+            self.set_tile(33, j, "vert")
+        for j in range(13, 16):
+            self.set_tile(27, j, "vert")
+        for j in range(19, 22):
+            self.set_tile(27, j, "vert")
 
-        for j in range(2, 20):
-            self.set_tile(13, j, "vert")
+        # Corners on chained outer walls
+        self.set_tile(9, 4, "corner,down_left")
+        self.set_tile(9, 7, "corner,up_right")
+        self.set_tile(6, 10, "corner,up_right")
+        self.set_tile(6, 16, "corner,down_left")
+        self.set_tile(12, 19, "corner,up_right")
+        self.set_tile(15, 10, "corner,up_left")
+        self.set_tile(21, 16, "corner,up_left")
+        self.set_tile(21, 13, "corner,down_right")
+        self.set_tile(24, 4, "corner,down_right")
+        self.set_tile(24, 10, "corner,up_right")
+        self.set_tile(24, 16, "corner,down_right")
+        self.set_tile(24, 19, "corner,up_left")
+        self.set_tile(30, 4, "corner,down_left")
+        self.set_tile(30, 7, "corner,up_left")
+        self.set_tile(30, 16, "corner,down_left")
+        self.set_tile(33, 13, "corner,up_left")
+        self.set_tile(33, 16, "corner,down_right")
 
-        for j in range(4, 22):
-            self.set_tile(16, j, "vert")
-
-        for j in range(2, 20):
-            self.set_tile(19, j, "vert")
-
-        for j in range(4, 22):
-            self.set_tile(22, j, "vert")
-
-        for j in range(2, 20):
-            self.set_tile(25, j, "vert")
-
-        for j in range(4, 22):
-            self.set_tile(28, j, "vert")
-
-        for j in range(2, 20):
-            self.set_tile(31, j, "vert")
+        # T's on chained inner walls
+        self.set_tile(12, 1, "t,down")
+        self.set_tile(18, 1, "t,down")
+        self.set_tile(12, 13, "t,down")
+        self.set_tile(18, 16, "t,down")
+        self.set_tile(27, 16, "t,up")
+        self.set_tile(27, 22, "t,up")
+        self.set_tile(9, 22, "t,up")
+        self.set_tile(2, 4, "t,right")
+        self.set_tile(2, 16, "t,right")
+        self.set_tile(37, 16, "t,left")
 
     def draw_2x2_box(self, x, y):
         self.set_tile(x, y, "corner,down_right")
