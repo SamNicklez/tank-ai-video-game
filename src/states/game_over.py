@@ -79,21 +79,41 @@ class GameOver(State):
         display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
 
         if self.win:
-            self.game.draw_text(display, "You Win!", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 4)
+            self.game.draw_text(display, "You Win!",
+                                (255, 255, 255),
+                                self.game.WIDTH / 2,
+                                self.game.HEIGHT / 2 - 290
+                                )
         else:
-            self.game.draw_text(display, "You Lose!", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 4)
+            self.game.draw_text(display, "You Lose!",
+                                (255, 255, 255),
+                                self.game.WIDTH / 2,
+                                self.game.HEIGHT / 2 - 290
+                                )
 
         if self.index == 1:
-            self.game.draw_button(display, "Play Level Again", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 150,
-                                  self.game.HEIGHT // 2 - 100, 300, 75)
-            self.game.draw_button(display, "Level Select", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2, 250, 75)
+            self.game.draw_button(display, "Play Level Again",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 160,
+                                  self.game.HEIGHT // 2 - 150,
+                                  320, 75
+                                  )
+            self.game.draw_button(display, "Level Select",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 25,
+                                  250, 75
+                                  )
         elif self.index == 2:
-            self.game.draw_button(display, "Play Level Again", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 150,
-                                  self.game.HEIGHT // 2 - 100, 300, 75)
-            self.game.draw_button(display, "Level Select", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2, 250, 75)
+            self.game.draw_button(display, "Play Level Again",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 160,
+                                  self.game.HEIGHT // 2 - 150,
+                                  320, 75
+                                  )
+            self.game.draw_button(display, "Level Select",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 25,
+                                  250, 75
+                                  )
