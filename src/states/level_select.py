@@ -14,6 +14,10 @@ class LevelSelect(State):
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 
+        menu_image_path = os.path.join(game.assets_dir, 'background_images', 'menu.png')
+        self.menu_image = pygame.image.load(menu_image_path).convert()
+        self.menu_image = pygame.transform.scale(self.menu_image, (672, 768))
+
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:
             if self.index in self.game.levels.keys():
@@ -67,8 +71,7 @@ class LevelSelect(State):
     def render(self, display):
         display.blit(self.background_image, (0, 0))
 
-        pygame.draw.rect(display, (0, 0, 128),
-                         pygame.Rect(self.game.WIDTH // 2 - 200, self.game.HEIGHT // 2 - 250, 400, 500))
+        display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
         self.game.draw_text(display, "Level Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 4)
 
         for level in self.game.levels.keys():
