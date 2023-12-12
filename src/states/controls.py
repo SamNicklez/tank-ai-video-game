@@ -50,16 +50,16 @@ class Controls(State):
         display.blit(self.background_image, (0, 0))
         display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
 
-        display.blit(self.space_bar_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 200))
+        display.blit(self.space_bar_image, (self.game.WIDTH // 2 - 150 - 15, self.game.HEIGHT // 2 - 285))
 
-        display.blit(self.esc_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 50))
+        display.blit(self.esc_image, (self.game.WIDTH // 2 + 15, self.game.HEIGHT // 2 - 285))
     
         display.blit(self.up_arrow_image, (self.game.WIDTH // 2 - 150, self.game.HEIGHT // 2 - 50))
 
-        self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+        #self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
 
-        self.game.draw_controls_text(display, "Shoot/Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 250)
-        self.game.draw_controls_text(display, "Pause", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 100)
+        self.game.draw_controls_text(display, "Shoot/Select", (255, 255, 255), self.game.WIDTH / 2 - 89, self.game.HEIGHT / 2 - 310)
+        self.game.draw_controls_text(display, "Pause", (255, 255, 255), self.game.WIDTH / 2 + 90, self.game.HEIGHT / 2 - 310)
         #self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
 
         self.game.draw_button(display, "Back",
