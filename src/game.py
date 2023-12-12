@@ -5,6 +5,7 @@ from PIL import Image
 from moviepy.editor import VideoFileClip
 
 from level.audio import *
+from states.controls import Controls
 from states.title import Title
 
 
@@ -42,11 +43,11 @@ class Game:
             },
             2: {
                 'level': None,
-                'status': 'unlocked'
+                'status': 'locked'
             },
             3: {
                 'level': None,
-                'status': 'unlocked'
+                'status': 'locked'
             },
         }
 
@@ -118,6 +119,12 @@ class Game:
         text_rect.center = (x, y)
         surface.blit(text_surface, text_rect)
 
+    def draw_controls_text(self, surface, text, color, x, y):
+        text_surface = self.font_controls.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
+        surface.blit(text_surface, text_rect)
+
     def draw_button(self, surface, text, button_color, text_color, x, y, width, height, button_width=2,
                     button_height=6):
         button = pygame.Rect(x, y, width, height)
@@ -136,6 +143,7 @@ class Game:
         self.assets_dir = os.path.join("assets")
         self.sprite_dir = os.path.join(self.assets_dir, "sprites")
         self.font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 70)
+        self.font_controls = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 30)
         self.font_button = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 42)
         self.title_font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 120)
         # Load all sounds
@@ -157,7 +165,7 @@ class Game:
             return np.array(resized_image)
 
         # Load the video
-        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'videos/intro_video2.mp4')).without_audio()
+        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'videos/intro_video_with_title.mp4')).without_audio()
 
         audio_path = os.path.join(self.assets_dir, "audio/intro_video_audio.mp3")
 
@@ -180,6 +188,6 @@ class Game:
 if __name__ == "__main__":
 
     g = Game()
-    Game.intro(g)
+    # Game.intro(g)
     while g.running:
         g.game_loop()

@@ -7,7 +7,7 @@ from level.tank import Tank
 
 
 class Enemy(Tank):
-    def __init__(self, game, start_pos, start_angle, player, bullets_group, visual_effects, walls):
+    def __init__(self, game, start_pos, start_angle, player, bullets_group, visual_effects, walls, lower_pathfinding=False):
         Tank.__init__(self, game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group, visual_effects,
                       walls)
 
@@ -22,6 +22,8 @@ class Enemy(Tank):
         self.action_cooldown = 500
         self.last_action_time = 0
 
+        if lower_pathfinding:
+            self.pathfinding_cooldown = 1000
         self.pathfinding_cooldown = 200
         self.last_pathfinding_time = 0
 

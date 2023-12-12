@@ -5,6 +5,7 @@ import pygame
 
 from states.level_select import LevelSelect
 from states.state import State
+from states.controls import Controls
 
 
 class Title(State):
@@ -26,7 +27,8 @@ class Title(State):
                 new_state = LevelSelect(self.game)
                 new_state.enter_state()
             elif self.menu_options[self.index] == 'controls':
-                pass
+                new_state = Controls(self.game)
+                new_state.enter_state()
             elif self.menu_options[self.index] == 'quit':
                 pygame.quit()
                 sys.exit()
