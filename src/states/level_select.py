@@ -1,8 +1,9 @@
-import pygame
 import os
 
+from states.level import Level
 from states.state import State
 from level.audio import *
+
 
 class LevelSelect(State):
     def __init__(self, game):
@@ -16,8 +17,12 @@ class LevelSelect(State):
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:
             if self.index in self.game.levels.keys():
-                if self.game.levels[self.index].status == 'unlocked':
-                    new_state = self.game.levels[self.index]
+                if self.game.levels[self.index]['status'] == 'unlocked':
+                    if self.game.levels[self.index]['level'] == None:
+                        self.game.levels[self.index]['level'] = Level(self.game, self.index)
+                        new_state = self.game.levels[self.index]['level']
+                    else:
+                        new_state = self.game.levels[self.index]['level']
                     new_state.enter_state()
                     round_start_sound()    
             else:
@@ -30,7 +35,7 @@ class LevelSelect(State):
                 self.index = 4
             else:
                 for _ in range(len(self.game.levels)):
-                    if self.game.levels[next_index].status == 'locked':
+                    if self.game.levels[next_index]['status'] == 'locked':
                         next_index -= 1
                         if next_index == 0:
                             self.index = 4
@@ -46,7 +51,7 @@ class LevelSelect(State):
                 self.index = 1
             else:
                 for _ in range(len(self.game.levels)):
-                    if self.game.levels[next_index].status == 'locked':
+                    if self.game.levels[next_index]['status'] == 'locked':
                         next_index += 1
                         if next_index == 4:
                             self.index = 4
@@ -67,7 +72,7 @@ class LevelSelect(State):
         self.game.draw_text(display, "Level Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 4)
 
         for level in self.game.levels.keys():
-            if self.game.levels[level].status == 'locked':
+            if self.game.levels[level]['status'] == 'locked':
                 self.game.draw_button(display, f"Level {level}", (128, 128, 128), (255, 255, 255),
                                       self.game.WIDTH // 2 - 125,
                                       self.game.HEIGHT // 2 - 150 + (100 * (level - 1)), 250, 75)

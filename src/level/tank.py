@@ -4,12 +4,14 @@ from level.bullet import Bullet
 
 from level.audio import *
 
+
 class Tank(pygame.sprite.Sprite):
-    def __init__(self, game, image_path, start_pos, start_angle, bullets_group, walls):
+    def __init__(self, game, image_path, start_pos, start_angle, bullets_group, visual_effects_group, walls):
         super(Tank, self).__init__()
         self.game = game
         self.walls = walls
         self.bullets_group = bullets_group
+        self.visual_effects_group = visual_effects_group
         self.original_image = pygame.image.load(image_path).convert_alpha()
         self.angle = start_angle
         self.image = pygame.transform.rotate(self.original_image, self.angle)
@@ -58,5 +60,5 @@ class Tank(pygame.sprite.Sprite):
     def shoot(self):
         tank_shoot_sound()
         bullet_start_pos = self.rect.center + self.direction * 40
-        new_bullet = Bullet(self.game, self.walls, bullet_start_pos, self.angle)
+        new_bullet = Bullet(self.game, self.walls, bullet_start_pos, self.angle, self.visual_effects_group)
         self.bullets_group.add(new_bullet)
