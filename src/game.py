@@ -119,9 +119,9 @@ class Game:
         text_rect.center = (x, y)
         surface.blit(text_surface, text_rect)
 
-    def draw_button(self, surface, text, button_color, text_color, x, y, width, height):
+    def draw_button(self, surface, text, button_color, text_color, x, y, width, height, button_width=2, button_height=6):
         button = pygame.Rect(x, y, width, height)
-        pygame.draw.rect(surface, button_color, button)
+        pygame.draw.rect(surface, button_color, button, button_width, button_height)
         text_surface = self.font_button.render(text, True, text_color)
         text_rect = text_surface.get_rect()
         text_rect.center = button.center
@@ -135,8 +135,9 @@ class Game:
         # Create pointers to directories
         self.assets_dir = os.path.join("assets")
         self.sprite_dir = os.path.join(self.assets_dir, "sprites")
-        self.font = pygame.font.Font(None, 72)
-        self.font_button = pygame.font.Font(None, 48)
+        self.font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 72)
+        self.font_button = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 42)
+        self.title_font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 128)
         # Load all sounds
         load_sounds()
 
@@ -171,6 +172,7 @@ class Game:
 
         # Play the resized video
         resized_clip.preview()
+
 
         # Close the clip after playing
         resized_clip.close()

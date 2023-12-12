@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 import pygame
 
@@ -16,6 +16,9 @@ class Title(State):
         background_image_path = os.path.join(game.assets_dir, 'background_images', 'Video image 1.png')
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
+        menu_image_path = os.path.join(game.assets_dir, 'background_images', 'menu.png')
+        self.menu_image = pygame.image.load(menu_image_path).convert()
+        self.menu_image = pygame.transform.scale(self.menu_image, (672, 768))
 
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:
@@ -47,30 +50,64 @@ class Title(State):
 
     def render(self, display):
         display.blit(self.background_image, (0, 0))
-        #display.fill((255, 255, 255))
+        display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
 
-        pygame.draw.rect(display, (0, 0, 128),
-                         pygame.Rect(self.game.WIDTH // 2 - 200, self.game.HEIGHT // 2 - 250, 400, 500))
-        self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 4)
+        self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
 
         if self.menu_options[self.index] == 'level_select':
-            self.game.draw_button(display, "Level Select", (0, 255, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Controls", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Quit", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
+            self.game.draw_button(display, "Level Select",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 200,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 75,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Quit",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 50,
+                                  260, 75
+                                  )
         elif self.menu_options[self.index] == 'controls':
-            self.game.draw_button(display, "Level Select", (255, 0, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Controls", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Quit", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
+            self.game.draw_button(display, "Level Select",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 200,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 75,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Quit",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 50,
+                                  260, 75
+                                  )
         elif self.menu_options[self.index] == 'quit':
-            self.game.draw_button(display, "Level Select", (255, 0, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Controls", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Quit", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
+            self.game.draw_button(display, "Level Select",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 200,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 75,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Quit",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 50,
+                                  260, 75
+                                  )
