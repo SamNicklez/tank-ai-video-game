@@ -55,41 +55,105 @@ class PauseMenu(State):
     def render(self, display):
         display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
 
-        self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 4)
+        self.game.draw_text(display, "Pause Menu", (255, 255, 255), self.game.WIDTH // 2, self.game.HEIGHT // 2 - 290)
 
         if self.menu_options[self.index] == 'resume':
-            self.game.draw_button(display, "Resume", (0, 255, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Restart", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Controls", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
-            self.game.draw_button(display, "Level Select", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 200, 250, 75)
+            self.game.draw_button(display, "Resume",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 240,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Restart",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 140,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 40,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Level Select",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 60,
+                                  260, 75
+                                  )
         elif self.menu_options[self.index] == 'restart':
-            self.game.draw_button(display, "Resume", (255, 0, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Restart", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Controls", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
-            self.game.draw_button(display, "Level Select", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 200, 250, 75)
+            self.game.draw_button(display, "Resume",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 240,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Restart",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 140,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 40,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Level Select",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 60,
+                                  260, 75
+                                  )
         elif self.menu_options[self.index] == 'controls':
-            self.game.draw_button(display, "Resume", (255, 0, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Restart", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Controls", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
-            self.game.draw_button(display, "Level Select", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 200, 250, 75)
+            self.game.draw_button(display, "Resume",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 240,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Restart",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 140,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 40,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Level Select",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 60,
+                                  260, 75
+                                  )
         elif self.menu_options[self.index] == 'level_select':
-            self.game.draw_button(display, "Resume", (255, 0, 0), (255, 255, 255), self.game.WIDTH // 2 - 125,
-                                  self.game.HEIGHT // 2 - 100, 250, 75)
-            self.game.draw_button(display, "Restart", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2, 250, 75)
-            self.game.draw_button(display, "Controls", (255, 0, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 100, 250, 75)
-            self.game.draw_button(display, "Level Select", (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 - 125, self.game.HEIGHT // 2 + 200, 250, 75)
+            self.game.draw_button(display, "Resume",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 240,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Restart",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 140,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Controls",
+                                  (255, 0, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 - 40,
+                                  260, 75
+                                  )
+            self.game.draw_button(display, "Level Select",
+                                  (0, 255, 0), (255, 255, 255),
+                                  self.game.WIDTH // 2 - 130,
+                                  self.game.HEIGHT // 2 + 60,
+                                  260, 75
+                                  )
