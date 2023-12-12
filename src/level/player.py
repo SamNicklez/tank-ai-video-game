@@ -2,8 +2,9 @@ from level.tank import Tank
 
 
 class Player(Tank):
-    def __init__(self, game, start_pos, start_angle, bullets_group, walls):
-        super(Player, self).__init__(game, f"{game.sprite_dir}/player_tank.png", start_pos, start_angle, bullets_group, walls)
+    def __init__(self, game, start_pos, start_angle, bullets_group, visual_effects, walls):
+        super(Player, self).__init__(game, f"{game.sprite_dir}/player_tank.png", start_pos, start_angle, bullets_group,
+                                     visual_effects, walls)
         self.health = 1
 
     def update(self, delta_time, actions):

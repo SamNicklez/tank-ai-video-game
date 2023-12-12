@@ -4,7 +4,6 @@ import numpy as np
 
 from moviepy.editor import VideoFileClip
 
-from states.level import Level
 from states.title import Title
 
 from level.audio import *
@@ -38,9 +37,18 @@ class Game:
         self.load_states()
 
         self.levels = {
-            1: Level(self, number=1, status='unlocked'),
-            2: Level(self, number=2, status='unlocked'),
-            3: Level(self, number=3, status='unlocked'),
+            1: {
+                'level': None,
+                'status': 'unlocked'
+            },
+            2: {
+                'level': None,
+                'status': 'unlocked'
+            },
+            3: {
+                'level': None,
+                'status': 'unlocked'
+            },
         }
 
     def game_loop(self):
