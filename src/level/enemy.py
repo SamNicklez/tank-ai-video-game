@@ -7,8 +7,8 @@ from level.tank import Tank
 
 
 class Enemy(Tank):
-    def __init__(self, game, start_pos, start_angle, player, bullets_group, walls):
-        Tank.__init__(self, game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group,
+    def __init__(self, game, start_pos, start_angle, player, bullets_group, visual_effects, walls):
+        Tank.__init__(self, game, f"{game.sprite_dir}/enemy_tank.png", start_pos, start_angle, bullets_group, visual_effects,
                       walls)
 
         self.player = player
