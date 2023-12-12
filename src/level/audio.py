@@ -19,7 +19,7 @@ def load_sounds():
     sounds['you_won'] = pygame.mixer.Sound('assets/audio/YouWon.mp3')
 
     # Set the volume for all sounds
-    sounds['game_background'].set_volume(0.1)
+    sounds['game_background'].set_volume(0.2)
     sounds['tank_shoot'].set_volume(0.4)
     sounds['tank_move'].set_volume(0.4)
     sounds['tank_explosion'].set_volume(0.4)
