@@ -1,8 +1,7 @@
 import os
 
-from states.level import Level
-from states.state import State
 from level.audio import *
+from states.state import State
 
 
 class Controls(State):
@@ -27,8 +26,6 @@ class Controls(State):
         self.esc_image = pygame.transform.scale(self.esc_image, (150, 75))
 
         arrow_path = os.path.join(game.assets_dir, 'background_images', 'ArrowKeyImage.png')
-
-        arrow_path = os.path.join(game.assets_dir, 'background_images', 'ArrowKeyImage.png')
         self.up_arrow_image = pygame.image.load(arrow_path).convert()
         self.up_arrow_image = pygame.transform.scale(self.up_arrow_image, (70, 70))
 
@@ -44,7 +41,6 @@ class Controls(State):
         self.left_arrow_image = pygame.transform.scale(self.left_arrow_image, (70, 70))
         self.left_arrow_image = pygame.transform.rotate(self.left_arrow_image, 90)
 
-
     def update(self, delta_time, actions):
         if actions["space"] or actions["enter"]:
             self.exit_state()
@@ -54,39 +50,82 @@ class Controls(State):
         display.blit(self.background_image, (0, 0))
         display.blit(self.menu_image, (self.game.WIDTH // 2 - 336, self.game.HEIGHT // 2 - 384))
 
-        display.blit(self.space_bar_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 200))
-
-        # display.blit(self.esc_image, (self.game.WIDTH // 2 - 75, self.game.HEIGHT // 2 - 50))
+        display.blit(self.space_bar_image, (self.game.WIDTH // 2 - 150 - 15, self.game.HEIGHT // 2 - 285))
+        display.blit(self.esc_image, (self.game.WIDTH // 2 + 15, self.game.HEIGHT // 2 - 285))
 
         display.blit(self.up_arrow_image,
                      (self.game.WIDTH // 2 - 35,
-                      self.game.HEIGHT // 2 - 100)
+                      self.game.HEIGHT // 2 - 125)
                      )
         display.blit(self.down_arrow_image,
                      (self.game.WIDTH // 2 - 35,
-                      self.game.HEIGHT // 2 - 30)
+                      self.game.HEIGHT // 2 - 55)
                      )
         display.blit(self.right_arrow_image,
                      (self.game.WIDTH // 2 - 35 + 70,
-                      self.game.HEIGHT // 2 - 30)
+                      self.game.HEIGHT // 2 - 55)
                      )
         display.blit(self.left_arrow_image,
                      (self.game.WIDTH // 2 - 35 - 70,
-                      self.game.HEIGHT // 2 - 30)
+                      self.game.HEIGHT // 2 - 55)
                      )
-        
 
-        # self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+        self.game.draw_controls_text(display, "Shoot/Select",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2 - 89,
+                                     self.game.HEIGHT / 2 - 310
+                                     )
+        self.game.draw_controls_text(display, "Pause",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2 + 90,
+                                     self.game.HEIGHT / 2 - 310
+                                     )
 
-        # self.game.draw_controls_text(display, "Shoot/Select", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 250)
-        # self.game.draw_controls_text(display, "Pause", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 100)
-        # #self.game.draw_text(display, "GAIT Tanks", (255, 255, 255), self.game.WIDTH / 2, self.game.HEIGHT / 2 - 290)
+        self.game.draw_controls_text(display, "Move",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2,
+                                     self.game.HEIGHT / 2 - 175
+                                     )
+        self.game.draw_controls_text(display, "Forward",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2,
+                                     self.game.HEIGHT / 2 - 145
+                                     )
+        self.game.draw_controls_text(display, "Move",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2,
+                                     self.game.HEIGHT / 2 + 35
+                                     )
+        self.game.draw_controls_text(display, "Backward",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2,
+                                     self.game.HEIGHT / 2 + 65
+                                     )
+        self.game.draw_controls_text(display, "Rotate",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2 + 120,
+                                     self.game.HEIGHT / 2 - 110
+                                     )
+        self.game.draw_controls_text(display, "Right",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2 + 120,
+                                     self.game.HEIGHT / 2 - 80
+                                     )
+
+        self.game.draw_controls_text(display, "Rotate",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2 - 120,
+                                     self.game.HEIGHT / 2 - 110
+                                     )
+        self.game.draw_controls_text(display, "Left",
+                                     (255, 255, 255),
+                                     self.game.WIDTH / 2 - 120,
+                                     self.game.HEIGHT / 2 - 80
+                                     )
 
         self.game.draw_button(display, "Back",
-                                  (0, 255, 0), (255, 255, 255),
-                                  self.game.WIDTH // 2 + 65,
-                                  self.game.HEIGHT // 2 + 100,
-                                  100, 50
-                                  )
-
-        
+                              (0, 255, 0), (255, 255, 255),
+                              self.game.WIDTH // 2 + 65,
+                              self.game.HEIGHT // 2 + 100,
+                              100, 50
+                              )
