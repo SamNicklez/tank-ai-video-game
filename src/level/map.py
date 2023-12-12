@@ -87,7 +87,7 @@ class Map:
         # All chained horizontal walls
         for i in range(12, 27):
             self.set_tile(i, 6, "hori")
-            self.set_tile(i, 16, "hori")
+            self.set_tile(i, 17, "hori")
         for i in range(19, 21):
             self.set_tile(i, 10, "hori")
             self.set_tile(i, 13, "hori")
@@ -106,8 +106,8 @@ class Map:
         # Corners on chained outer walls
         self.set_tile(12, 6, "corner,down_right")
         self.set_tile(27, 6, "corner,down_left")
-        self.set_tile(12, 16, "corner,up_right")
-        self.set_tile(27, 16, "corner,up_left")
+        self.set_tile(12, 17, "corner,up_right")
+        self.set_tile(27, 17, "corner,up_left")
 
         # Corners on chained inner walls
         self.set_tile(18, 10, "corner,down_right")
@@ -155,8 +155,8 @@ class Map:
             self.set_tile(29, j, "vert")
 
         for j in range(10, 14):
-            self.set_tile(14, j, "vert")
-            self.set_tile(23, j, "vert")
+            self.set_tile(15, j, "vert")
+            self.set_tile(24, j, "vert")
 
         # Corners on chained outer walls
         self.set_tile(6, 4, "corner,down_right")

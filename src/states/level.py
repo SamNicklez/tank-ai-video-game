@@ -135,7 +135,7 @@ class Level(State):
             )
             self.spawn_enemy(
                 (35 * self.game.TILE_SIZE,
-                 18 * self.game.TILE_SIZEl),
+                 18 * self.game.TILE_SIZE),
                 180, True
             )
 

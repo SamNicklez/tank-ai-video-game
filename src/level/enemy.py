@@ -26,7 +26,8 @@ class Enemy(Tank):
 
         if lower_pathfinding:
             self.pathfinding_cooldown = 1000
-        self.pathfinding_cooldown = 200
+        else:
+            self.pathfinding_cooldown = 200
         self.last_pathfinding_time = 0
 
         self.state = "idle"
