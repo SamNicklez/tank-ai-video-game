@@ -1,5 +1,3 @@
-import os
-
 from level.audio import *
 from states.state import State
 

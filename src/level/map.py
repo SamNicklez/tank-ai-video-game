@@ -9,7 +9,7 @@ class Map:
         self.game = game
         self.number = number
 
-        background_image_path = resource_path(os.path.join(game.assets_dir, "background_images","Partial Floor.png"))
+        background_image_path = resource_path(os.path.join(game.assets_dir, "background_images", "Partial Floor.png"))
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 

@@ -1,6 +1,3 @@
-import os
-import sys
-
 import numpy as np
 from PIL import Image
 from moviepy.editor import VideoFileClip
@@ -160,7 +157,8 @@ class Game:
             return np.array(resized_image)
 
         # Load the video
-        intro_clip = VideoFileClip(resource_path(os.path.join(self.assets_dir, "videos", "intro_video_with_title.mp4"))).without_audio()
+        intro_clip = VideoFileClip(
+            resource_path(os.path.join(self.assets_dir, "videos", "intro_video_with_title.mp4"))).without_audio()
 
         audio_path = resource_path(os.path.join(self.assets_dir, "audio", "intro_video_audio.mp3"))
 
