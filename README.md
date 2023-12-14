@@ -15,16 +15,13 @@ Gait Tanks is a Python-based, tank-themed game. This project encompasses a varie
 
 ### Core Game Mechanics
 - **Main Game File ([game.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/game.py))**: Initializes the main game loop, which handles updating and rendering game states. When the player moves from state to state in the app the current state is updated to show to correct one on the screen.
-- **[States](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/)**: Each state inherits from the main state.py class. Each has its own update and render functions which handle updating the game objects and then rendering the screen with those updated objects.
+- **[States](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/)**: Each state inherits from the main [state.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/state.py) class. Each has its own update and render functions which handle updating the game objects and then rendering the screen with those updated objects.
 - **Audio Management ([audio.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/audio.py))**: Manages all audio aspects of the game, including loading and playing sound effects for different game actions like tank movements and explosions.
-- **Pathfinding ([pathfinding.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/pathfinding.py))**: Implements algorithms for AI-controlled tanks, ensuring efficient movement and navigation within the game environment.
+- **Pathfinding ([pathfinding.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/pathfinding.py))**: Implements A* pathfinding algorithms for AI-controlled tanks, ensuring efficient movement and navigation within the game environment.
 
-### Game State Management
-- **State System ([state.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/state.py))**: A base class for managing various states within the game, such as the title screen, level selection, and gameplay.
-- **Specific States**: Includes implementations for different game states like the title screen ([title.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/title.py)), level management ([level.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/level.py)), and others.
-
-### Level Components
-- **Bullet Behavior ([bullet.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/bullet.py))**: Manages the behavior of bullets in the game, including their movement and interactions with other objects.
+### Objects
+- **Player and Enemies**: Both [Player](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/player.py) and [Enemy](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/enemy.py) inherit from the main [Tank Class](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/tank.py) which provides base properties that apply to both player and enemies. Both inheriting classes add the more specific functionality that only applies to them.
+- **Bullet and FireEffect**: Both housed in the [bullet.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/bullet.py) file and deal with the creation, updating, rendering, and deletion of the bullet sprites during the gameplay.
 
 ### Assets
 - **Audio, Images, and Videos**: The project includes a comprehensive set of assets such as audio files, background images, sprites, and videos, crucial for the game's visual and auditory elements.
