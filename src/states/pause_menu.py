@@ -2,6 +2,7 @@ import os
 
 import pygame
 
+from states.controls import Controls
 from states.state import State
 
 
@@ -25,7 +26,8 @@ class PauseMenu(State):
                 self.level.level_init()
                 self.exit_state()
             elif self.index == 2:
-                pass
+                new_state = Controls(self.game)
+                new_state.enter_state()
             elif self.index == 3:
                 self.level.level_init()
                 self.game.state_stack.pop()

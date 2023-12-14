@@ -1,3 +1,6 @@
+import os
+import sys
+
 import pygame
 
 # Initialize the pygame mixer
@@ -10,13 +13,13 @@ sounds = {}
 # Function to load sounds
 def load_sounds():
     # Load all sounds here
-    sounds['tank_shoot'] = pygame.mixer.Sound('assets/audio/TankBullet.mp3')
-    sounds['game_background'] = pygame.mixer.Sound('assets/audio/GameBackground.mp3')
-    sounds['tank_move'] = pygame.mixer.Sound('assets/audio/TankMovingShort.mp3')
-    sounds['tank_explosion'] = pygame.mixer.Sound('assets/audio/TankExplosion.mp3')
-    sounds['round_start'] = pygame.mixer.Sound('assets/audio/RoundStart.mp3')
-    sounds['you_lost'] = pygame.mixer.Sound('assets/audio/YouLostSound.mp3')
-    sounds['you_won'] = pygame.mixer.Sound('assets/audio/YouWon.mp3')
+    sounds['tank_shoot'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "TankBullet.mp3")))
+    sounds['game_background'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "GameBackground.mp3")))
+    sounds['tank_move'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "TankMovingShort.mp3")))
+    sounds['tank_explosion'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "TankExplosion.mp3")))
+    sounds['round_start'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "RoundStart.mp3")))
+    sounds['you_lost'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "YouLostSound.mp3")))
+    sounds['you_won'] = pygame.mixer.Sound(resource_path(os.path.join("assets", "audio", "YouWon.mp3")))
 
     # Set the volume for all sounds
     sounds['game_background'].set_volume(0.2)
@@ -92,3 +95,16 @@ def check_background_sound():
         return True
     else:
         return False
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    if getattr(sys, 'frozen', False):
+        # If the application is bundled by PyInstaller
+        base_path = sys._MEIPASS
+    else:
+        # If the application is running in a development environment
+        # Adjust the following line to correctly point to your project root
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    return os.path.join(base_path, relative_path)

@@ -1,4 +1,5 @@
 import os
+import sys
 
 import numpy as np
 from PIL import Image
@@ -134,12 +135,12 @@ class Game:
 
     def load_assets(self):
         # Create pointers to directories
-        self.assets_dir = os.path.join("assets")
-        self.sprite_dir = os.path.join(self.assets_dir, "sprites")
-        self.font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 70)
-        self.font_controls = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 30)
-        self.font_button = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 42)
-        self.title_font = pygame.font.Font(self.assets_dir + "/fonts/Blockletter.otf", 120)
+        self.assets_dir = resource_path("assets")
+        self.sprite_dir = resource_path(os.path.join(self.assets_dir, "sprites"))
+        self.font = pygame.font.Font(os.path.join(self.assets_dir, "fonts", "Blockletter.otf"), 70)
+        self.font_controls = pygame.font.Font(os.path.join(self.assets_dir, "fonts", "Blockletter.otf"), 30)
+        self.font_button = pygame.font.Font(os.path.join(self.assets_dir, "fonts", "Blockletter.otf"), 42)
+        self.title_font = pygame.font.Font(os.path.join(self.assets_dir, "fonts", "Blockletter.otf"), 120)
         # Load all sounds
         load_sounds()
 
@@ -159,9 +160,9 @@ class Game:
             return np.array(resized_image)
 
         # Load the video
-        intro_clip = VideoFileClip(os.path.join(self.assets_dir, 'videos/intro_video_with_title.mp4')).without_audio()
+        intro_clip = VideoFileClip(resource_path(os.path.join(self.assets_dir, "videos", "intro_video_with_title.mp4"))).without_audio()
 
-        audio_path = os.path.join(self.assets_dir, "audio/intro_video_audio.mp3")
+        audio_path = resource_path(os.path.join(self.assets_dir, "audio", "intro_video_audio.mp3"))
 
         # Initialize Pygame mixer and play the audio
         pygame.mixer.init()
@@ -177,6 +178,12 @@ class Game:
         # Close the clip after playing
         resized_clip.close()
         pygame.mixer.music.stop()
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 
 if __name__ == "__main__":

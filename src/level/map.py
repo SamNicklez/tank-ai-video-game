@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pygame
 
@@ -8,7 +9,7 @@ class Map:
         self.game = game
         self.number = number
 
-        background_image_path = os.path.join(game.assets_dir, 'background_images', 'Partial Floor.png')
+        background_image_path = resource_path(os.path.join(game.assets_dir, "background_images","Partial Floor.png"))
         self.background_image = pygame.image.load(background_image_path).convert()
         self.background_image = pygame.transform.scale(self.background_image, (game.WIDTH, game.HEIGHT))
 
@@ -284,10 +285,10 @@ class Map:
         self.set_tile(x + 1, y + 1, "corner,up_left")
 
     def load_textures(self):
-        grass = pygame.image.load(f"{self.game.assets_dir}/map/grass.png")
-        wall = pygame.image.load(f"{self.game.assets_dir}/map/wall.png")
-        wall_t = pygame.image.load(f"{self.game.assets_dir}/map/wall_t.png")
-        wall_corner = pygame.image.load(f"{self.game.assets_dir}/map/wall_corner.png")
+        grass = pygame.image.load(os.path.join(self.game.assets_dir, "map", "grass.png"))
+        wall = pygame.image.load(os.path.join(self.game.assets_dir, "map", "wall.png"))
+        wall_t = pygame.image.load(os.path.join(self.game.assets_dir, "map", "wall_t.png"))
+        wall_corner = pygame.image.load(os.path.join(self.game.assets_dir, "map", "wall_corner.png"))
 
         wall_textures = {
             'vert': wall,
@@ -308,3 +309,16 @@ class Map:
 
         self.out_of_bounds_texture = grass
         self.wall_textures = wall_textures
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    if getattr(sys, 'frozen', False):
+        # If the application is bundled by PyInstaller
+        base_path = sys._MEIPASS
+    else:
+        # If the application is running in a development environment
+        # Adjust the following line to correctly point to your project root
+        base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+    return os.path.join(base_path, relative_path)

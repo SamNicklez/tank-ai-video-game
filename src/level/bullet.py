@@ -7,7 +7,7 @@ class Bullet(pygame.sprite.Sprite):
         self.game = game
         self.walls = walls
         self.visual_effects_group = visual_effects_group
-        self.original_image = pygame.image.load(f"{game.sprite_dir}/bullet2.png").convert_alpha()
+        self.original_image = pygame.image.load(fr"{game.sprite_dir}\bullet.png").convert_alpha()
         self.angle = start_angle
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.mask = pygame.mask.from_surface(self.image)
