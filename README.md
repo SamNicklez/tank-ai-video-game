@@ -28,34 +28,28 @@ Gait Tanks is a Python-based, tank-themed game. This project encompasses a varie
 
 ## File Structure
 
-### IDE Configuration Files
-- `.idea/`: Directory containing configuration files for JetBrains IDEs.
-
-### Root Directory
-- `README.md`: The main documentation file for the repository.
-
 ### Source Code (`src/`)
-- `game.py`: Main game script.
-- `level/`: Directory for level-related modules.
-  - `audio.py`: Handles game audio.
-  - `bullet.py`: Manages bullet behavior.
-  - `enemy.py`: Defines enemy behavior.
-  - `map.py`: Related to the game map.
-  - `pathfinding.py`: Implements pathfinding algorithms.
-  - `player.py`: Manages player behavior.
-  - `tank.py`: Defines tank behavior.
-- `states/`: Directory for game state management.
-  - `controls.py`: Related to game controls.
-  - `game_over.py`: Manages the game over state.
-  - `level.py`: Handles individual game levels.
-  - `level_select.py`: Manages level selection.
-  - `pause_menu.py`: Pause menu implementation.
-  - `state.py`: Base class for game states.
-  - `title.py`: Manages the title screen.
+- `game.py`: Main game script
+- `level/`: Directory for the in-game objects and assets
+  - `audio.py`: Handles game audio
+  - `bullet.py`: Manages bullet and fire effect behavior
+  - `enemy.py`: Defines enemy behavior
+  - `map.py`: Related to the game map
+  - `pathfinding.py`: Pathfinding algorithm for the enemies
+  - `player.py`: Manages player behavior
+  - `tank.py`: Defines tank behavior
+- `states/`: Directory for game states
+  - `controls.py`: Controls Screen State
+  - `game_over.py`: Game Over Screen State
+  - `level.py`: In-Game Level State
+  - `level_select.py`: Level Select Screen State
+  - `pause_menu.py`: Pause Menu State
+  - `state.py`: Base class for states
+  - `title.py`: Title Screen State
 
 ### Assets (`src/assets/`)
-- `audio/`: Contains audio files like background music and sound effects.
-- `background_images/`: Background images for the game.
-- `map/`: Images and tiles for the game map.
-- `sprites/`: Sprite images for various game elements.
-- `videos/`: Video files used in the game.
+- `audio/`: Audio files for the game
+- `background_images/`: Images for the game
+- `map/`: Individual 32x32px tiles for in-game map creation
+- `sprites/`: Sprite images for game elements
+- `videos/`: Video files for the game
