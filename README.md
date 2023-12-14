@@ -1,13 +1,21 @@
 # Gait Tanks Repository Overview
 https://github.com/ColeArduser/gait_tanks/assets/81708973/45181a21-2a24-4729-97c9-1a795bac7324
 
+## To Run
+- **[game.exe](https://github.com/ColeArduser/gait_tanks/blob/master/dist/game.exe)** can be downloaded and run to play the game
+
+  or
+
+- Clone the repository, setup your environment, install the dependencies in the [requirements.txt](https://github.com/ColeArduser/gait_tanks/blob/master/requirements.txt), and run [game.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/game.py)
+
 ## Introduction
 Gait Tanks is a Python-based, tank-themed game. This project encompasses a variety of functionalities from game mechanics to audio and state management, providing an immersive gaming experience.
 
 ## Key Components
 
 ### Core Game Mechanics
-- **Main Game Loop ([game.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/game.py))**: Initializes the game, sets up the main loop, handles events, updates, and rendering. Includes functions for playing intro videos and loading game states.
+- **Main Game File ([game.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/game.py))**: Initializes the main game loop, which handles updating and rendering game states. When the player moves from state to state in the app the current state is updated to show to correct one on the screen.
+- **[States](https://github.com/ColeArduser/gait_tanks/blob/master/src/states/)**: Each state inherits from the main state.py class. Each has its own update and render functions which handle updating the game objects and then rendering the screen with those updated objects.
 - **Audio Management ([audio.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/audio.py))**: Manages all audio aspects of the game, including loading and playing sound effects for different game actions like tank movements and explosions.
 - **Pathfinding ([pathfinding.py](https://github.com/ColeArduser/gait_tanks/blob/master/src/level/pathfinding.py))**: Implements algorithms for AI-controlled tanks, ensuring efficient movement and navigation within the game environment.
 
