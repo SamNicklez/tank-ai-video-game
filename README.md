@@ -1,6 +1,8 @@
 # Gait Tanks Repository Overview
 Note: All sounds, images, and video in this game were made using generative AI
 
+Please refer to `GAIT Final Report.pdf` for full overview
+
 https://github.com/ColeArduser/gait_tanks/assets/81708973/45181a21-2a24-4729-97c9-1a795bac7324
 
 
